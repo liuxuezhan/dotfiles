@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 echo $1
 timestamp=`date "+%Y-%m-%d %H:%M:%S"` 
 if [ $# == 1 ]
