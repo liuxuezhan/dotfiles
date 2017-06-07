@@ -2,8 +2,24 @@
 
 cd $(dirname $BASH_SOURCE)
 BASE=$(pwd)
+CURRENT_DIR=`pwd`
 
 export GIT_SSL_NO_VERIFY=true
+
+echo "Step1: backing up current vim config"
+today=`date +%Y%m%d`
+    for i in $HOME/.vim $HOME/.vimrc $HOME/.gvimrc $HOME/.vimrc.bundles; do [ -e $i ] && [ ! -L $i ] && mv $i $i.$today; done
+    for i in $HOME/.vim $HOME/.vimrc $HOME/.gvimrc $HOME/.vimrc.bundles; do [ -L $i ] && unlink $i ; done
+    for i in $HOME/.config/nvim $HOME/.config/nvim/init.vim; do [ -e $i ] && [ ! -L $i ] && mv $i $i.$today; done
+    for i in $HOME/.config/nvim/init.vim $HOME/.config/nvim; do [ -L $i ] && unlink $i ; done
+
+echo "Step2: setting up symlinks"
+    lnif $CURRENT_DIR/vimrc $HOME/.vimrc
+    lnif "$CURRENT_DIR/" "$HOME/.vim"
+    lnif "$CURRENT_DIR/" "$HOME/.config/nvim"
+    lnif $CURRENT_DIR/vimrc $CURRENT_DIR/init.vim
+
+
 mkdir -p ~/.vim/autoload
 curl --insecure -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim
 

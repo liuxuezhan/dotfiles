@@ -21,8 +21,6 @@ if s:darwin
 else
   let $GIT_SSL_NO_VERIFY = 'true'
 endif
-"搜索
-Plug 'rking/ag.vim'
 " airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -1537,7 +1535,7 @@ if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme="base16" 
+"let g:airline_theme="base16" 
 let g:airline_powerline_fonts = 1
 " 闭状态显示空白符号计数
 let g:airline#extensions#whitespace#enabled = 0
@@ -1554,19 +1552,4 @@ nnoremap <leader>n :NERDTreeToggle<cr>
 let NERDTreeHighlightCursorline=1
 let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
-let g:NERDTreeMapOpenSplit = 's'
-let g:NERDTreeMapOpenVSplit = 'v'
-let NERDTreeShowBookmarks=1
-let NERDTreeShowHidden=1
-let NERDTreeWinPos = "right"
-let NERDTreeChDirMode = 2"改变跟目录
-let NERDTreeQuitOnOpen = 1"打开关闭
-
-" ============================================================================
-" 搜索ag.vim
-let g:ackprg = "ag --nocolor --nogroup --column"
-set grepprg=ag\ --nogroup\ --nocolor
-command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-nnoremap \ :Ag<CR>
-
 
