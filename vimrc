@@ -1533,11 +1533,12 @@ highlight SpellRare term=underline cterm=underline
 highlight clear SpellLocal
 highlight SpellLocal term=underline cterm=underline
 " ============================================================================
+" 状态栏和buffers
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme="base16" 
+let g:airline_theme="aurora" 
 let g:airline_powerline_fonts = 1
 " 闭状态显示空白符号计数
 let g:airline#extensions#whitespace#enabled = 0
@@ -1561,6 +1562,7 @@ let NERDTreeShowHidden=1
 let NERDTreeWinPos = "right"
 let NERDTreeChDirMode = 2"改变跟目录
 let NERDTreeQuitOnOpen = 1"打开关闭
+nnoremap ; :
 
 " ============================================================================
 " 搜索ag.vim
