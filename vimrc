@@ -21,7 +21,9 @@ if s:darwin
 else
   let $GIT_SSL_NO_VERIFY = 'true'
 endif
-
+" airline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 " My plugins
 Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
@@ -79,7 +81,7 @@ augroup nerd_loader
 augroup END
 
 if v:version >= 703
-  Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
+  Plug 'majutsushi/tagbar'
 endif
 Plug 'justinmk/vim-gtfo'
 
@@ -186,93 +188,6 @@ endif
 " %V Virtual column
 " %P Percentage
 " %#HighlightGroup#
-set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}\ %=%-14.(%l,%c%V%)\ %P
-silent! if emoji#available()
-  let s:ft_emoji = map({
-    \ 'c':          'baby_chick',
-    \ 'clojure':    'lollipop',
-    \ 'coffee':     'coffee',
-    \ 'cpp':        'chicken',
-    \ 'css':        'art',
-    \ 'eruby':      'ring',
-    \ 'gitcommit':  'soon',
-    \ 'haml':       'hammer',
-    \ 'help':       'angel',
-    \ 'html':       'herb',
-    \ 'java':       'older_man',
-    \ 'javascript': 'monkey',
-    \ 'make':       'seedling',
-    \ 'markdown':   'book',
-    \ 'perl':       'camel',
-    \ 'python':     'snake',
-    \ 'ruby':       'gem',
-    \ 'scala':      'barber',
-    \ 'sh':         'shell',
-    \ 'slim':       'dancer',
-    \ 'text':       'books',
-    \ 'vim':        'poop',
-    \ 'vim-plug':   'electric_plug',
-    \ 'yaml':       'yum',
-    \ 'yaml.jinja': 'yum'
-  \ }, 'emoji#for(v:val)')
-
-  function! S_filetype()
-    if empty(&filetype)
-      return emoji#for('grey_question')
-    else
-      return get(s:ft_emoji, &filetype, '['.&filetype.']')
-    endif
-  endfunction
-
-  function! S_modified()
-    if &modified
-      return emoji#for('kiss').' '
-    elseif !&modifiable
-      return emoji#for('construction').' '
-    else
-      return ''
-    endif
-  endfunction
-
-  function! S_fugitive()
-    if !exists('g:loaded_fugitive')
-      return ''
-    endif
-    let head = fugitive#head()
-    if empty(head)
-      return ''
-    else
-      return head == 'master' ? emoji#for('crown') : emoji#for('dango').'='.head
-    endif
-  endfunction
-
-  let s:braille = split('"⠉⠒⠤⣀', '\zs')
-  function! Braille()
-    let len = len(s:braille)
-    let [cur, max] = [line('.'), line('$')]
-    let pos  = min([len * (cur - 1) / max([1, max - 1]), len - 1])
-    return s:braille[pos]
-  endfunction
-
-  hi def link User1 TablineFill
-  let s:cherry = emoji#for('cherry_blossom')
-  function! MyStatusLine()
-    let mod = '%{S_modified()}'
-    let ro  = "%{&readonly ? emoji#for('lock') . ' ' : ''}"
-    let ft  = '%{S_filetype()}'
-    let fug = ' %{S_fugitive()}'
-    let sep = ' %= '
-    let pos = ' %l,%c%V '
-    let pct = ' %P '
-
-    return s:cherry.' [%n] %F %<'.mod.ro.ft.fug.sep.pos.'%{Braille()}%*'.pct.s:cherry
-  endfunction
-
-  " Note that the "%!" expression is evaluated in the context of the
-  " current window and buffer, while %{} items are evaluated in the
-  " context of the window that the statusline belongs to.
-  set statusline=%!MyStatusLine()
-endif
 
 " 代码折叠
 set foldenable
@@ -352,13 +267,6 @@ endif
 " Basic mappings
 " ----------------------------------------------------------------------------
 
-noremap <C-F> <C-D>
-noremap <C-B> <C-U>
-
-" Save
-nnoremap <leader>s :update<cr>
-nnoremap <leader>w :update<cr>
-
 " Disable CTRL-A on tmux or on screen
 if $TERM =~ 'screen'
   nnoremap <C-a> <nop>
@@ -376,9 +284,6 @@ set t_ti= t_te=
 " Tags
 nnoremap <C-]> g<C-]>
 nnoremap g[ :pop<cr>
-
-" Jump list (to newer position)
-nnoremap <C-p> <C-i>
 
 " F1 废弃这个键,防止调出系统帮助
 noremap <F1> <Esc>"
@@ -430,8 +335,6 @@ inoremap <C-^> <C-o><C-^>
 " Make Y behave like other capitals
 nnoremap Y y$
 
-" qq to record, Q to replay
-nnoremap Q @q
 
 " Zoom
 function! s:zoom()
@@ -464,12 +367,6 @@ nnoremap ]q :cnext<cr>zz
 nnoremap [q :cprev<cr>zz
 nnoremap ]l :lnext<cr>zz
 nnoremap [l :lprev<cr>zz
-
-" ----------------------------------------------------------------------------
-" Buffers
-" ----------------------------------------------------------------------------
-nnoremap ]b :bnext<cr>
-nnoremap [b :bprev<cr>
 
 " ----------------------------------------------------------------------------
 " Tabs
@@ -1131,7 +1028,7 @@ endfor
 " ?ie | entire object
 " ----------------------------------------------------------------------------
 xnoremap <silent> ie gg0oG$
-onoremap <silent> ie :<C-U>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>
+onoremap <silent> ie :<C-U>execute "normal! m`"<Bar>keepjumps normal! eggVG<CR>
 
 " ----------------------------------------------------------------------------
 " ?il | inner line
@@ -1383,15 +1280,11 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 nmap gaa ga_
 
-" xmap <Leader><Enter>   <Plug>(LiveEasyAlign)
-" nmap <Leader><Leader>a <Plug>(LiveEasyAlign)
-
-" inoremap <silent> => =><Esc>mzvip:EasyAlign/=>/<CR>`z$a<Space>
 
 " ----------------------------------------------------------------------------
 " vim-github-dashboard
 " ----------------------------------------------------------------------------
-let g:github_dashboard = { 'username': 'junegunn' }
+let g:github_dashboard = { 'username': 'liuxuezhan' }
 
 " ----------------------------------------------------------------------------
 " indentLine
@@ -1412,129 +1305,10 @@ if has('timers')
 endif
 
 " ----------------------------------------------------------------------------
-" vim-emoji :dog: :cat: :rabbit:!
-" ----------------------------------------------------------------------------
-function! s:replace_emojis() range
-  for lnum in range(a:firstline, a:lastline)
-    let line = getline(lnum)
-    let subs = substitute(line,
-          \ ':\([^:]\+\):', '\=emoji#for(submatch(1), submatch(0))', 'g')
-    if line != subs
-      call setline(lnum, subs)
-    endif
-  endfor
-endfunction
-command! -range EmojiReplace <line1>,<line2>call s:replace_emojis()
-
-" ----------------------------------------------------------------------------
-" goyo.vim + limelight.vim
-" ----------------------------------------------------------------------------
-let g:limelight_paragraph_span = 1
-let g:limelight_priority = -1
-
-function! s:goyo_enter()
-  if has('gui_running')
-    set fullscreen
-    set background=light
-    set linespace=7
-  elseif exists('$TMUX')
-    silent !tmux set status off
-  endif
-  Limelight
-  let &l:statusline = '%M'
-  hi StatusLine ctermfg=red guifg=red cterm=NONE gui=NONE
-endfunction
-
-function! s:goyo_leave()
-  if has('gui_running')
-    set nofullscreen
-    set background=dark
-    set linespace=0
-  elseif exists('$TMUX')
-    silent !tmux set status on
-  endif
-  Limelight!
-endfunction
-
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
-
-nnoremap <Leader>G :Goyo<CR>
-
-" ----------------------------------------------------------------------------
-" gv.vim / gl.vim
-" ----------------------------------------------------------------------------
-function! s:gv_expand()
-  let line = getline('.')
-  GV --name-status
-  call search('\V'.line, 'c')
-  normal! zz
-endfunction
-
-autocmd! FileType GV nnoremap <buffer> <silent> + :call <sid>gv_expand()<cr>
-
-" ----------------------------------------------------------------------------
 " undotree
 " ----------------------------------------------------------------------------
 let g:undotree_WindowLayout = 2
 nnoremap U :UndotreeToggle<CR>
-
-" ----------------------------------------------------------------------------
-" clojure
-" ----------------------------------------------------------------------------
-function! s:lisp_maps()
-  nnoremap <buffer> <leader>a[ vi[<c-v>$:EasyAlign\ g/^\S/<cr>gv=
-  nnoremap <buffer> <leader>a{ vi{<c-v>$:EasyAlign\ g/^\S/<cr>gv=
-  nnoremap <buffer> <leader>a( vi(<c-v>$:EasyAlign\ g/^\S/<cr>gv=
-  nnoremap <buffer> <leader>rq :silent update<bar>Require<cr>
-  nnoremap <buffer> <leader>rQ :silent update<bar>Require!<cr>
-  nnoremap <buffer> <leader>rt :silent update<bar>RunTests<cr>
-  nmap     <buffer> <leader>*  cqp<c-r><c-w><cr>
-  nmap     <buffer> <c-]>      <Plug>FireplaceDjumpzz
-  imap     <buffer> <c-j><c-n> <c-o>(<right>.<space><left><tab>
-endfunction
-
-function! s:countdown(message, seconds)
-  for t in range(a:seconds)
-    let left = a:seconds - t
-    echom printf('%s in %d second%s', a:message, left, left > 1 ? 's' : '')
-    redraw
-    sleep 1
-  endfor
-  echo
-endfunction
-
-function! s:figwheel()
-  call system('tmux send-keys -t right C-u "(start-figwheel!)" Enter')
-  call system('open-chrome localhost:3449')
-  call s:countdown('Piggieback', 5)
-  Piggieback (figwheel-sidecar.repl-api/repl-env)
-endfunction
-
-augroup vimrc
-  autocmd FileType lisp,clojure,scheme RainbowParentheses
-  autocmd FileType lisp,clojure,scheme call <sid>lisp_maps()
-
-  " Clojure
-  autocmd FileType clojure xnoremap <buffer> <Enter> :Eval<CR>
-  autocmd FileType clojure nmap <buffer> <Enter> cpp
-
-  " Figwheel
-  autocmd BufReadPost *.cljs command! -buffer Figwheel call s:figwheel()
-augroup END
-
-let g:clojure_maxlines = 60
-
-set lispwords+=match
-let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
-
-" let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
-let g:paredit_smartjump = 1
-
-" vim-cljfmt
-let g:clj_fmt_autosave = 0
-autocmd vimrc BufWritePre *.clj call cljfmt#AutoFormat()
-autocmd vimrc BufWritePre *.cljc call cljfmt#AutoFormat()
 
 " ----------------------------------------------------------------------------
 " vim-markdown
@@ -1708,7 +1482,6 @@ autocmd vimrc BufEnter *.txt call s:helptab()
 " }}}
 " ============================================================================
 " LOCAL VIMRC {{{
-" ============================================================================
 let s:local_vimrc = fnamemodify(resolve(expand('<sfile>')), ':p:h').'/vimrc-extra'
 if filereadable(s:local_vimrc)
   execute 'source' s:local_vimrc
@@ -1760,4 +1533,92 @@ highlight clear SpellRare
 highlight SpellRare term=underline cterm=underline
 highlight clear SpellLocal
 highlight SpellLocal term=underline cterm=underline
+" ============================================================================
+set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}\ %=%-14.(%l,%c%V%)\ %P
+silent! if emoji#available()
+  let s:ft_emoji = map({
+    \ 'c':          'baby_chick',
+    \ 'clojure':    'lollipop',
+    \ 'coffee':     'coffee',
+    \ 'cpp':        'chicken',
+    \ 'css':        'art',
+    \ 'eruby':      'ring',
+    \ 'gitcommit':  'soon',
+    \ 'haml':       'hammer',
+    \ 'help':       'angel',
+    \ 'html':       'herb',
+    \ 'java':       'older_man',
+    \ 'javascript': 'monkey',
+    \ 'make':       'seedling',
+    \ 'markdown':   'book',
+    \ 'perl':       'camel',
+    \ 'python':     'snake',
+    \ 'ruby':       'gem',
+    \ 'scala':      'barber',
+    \ 'sh':         'shell',
+    \ 'slim':       'dancer',
+    \ 'text':       'books',
+    \ 'vim':        'poop',
+    \ 'vim-plug':   'electric_plug',
+    \ 'yaml':       'yum',
+    \ 'yaml.jinja': 'yum'
+  \ }, 'emoji#for(v:val)')
+
+  function! S_filetype()
+    if empty(&filetype)
+      return emoji#for('grey_question')
+    else
+      return get(s:ft_emoji, &filetype, '['.&filetype.']')
+    endif
+  endfunction
+
+  function! S_modified()
+    if &modified
+      return emoji#for('kiss').' '
+    elseif !&modifiable
+      return emoji#for('construction').' '
+    else
+      return ''
+    endif
+  endfunction
+
+  function! S_fugitive()
+    if !exists('g:loaded_fugitive')
+      return ''
+    endif
+    let head = fugitive#head()
+    if empty(head)
+      return ''
+    else
+      return head == 'master' ? emoji#for('crown') : emoji#for('dango').'='.head
+    endif
+  endfunction
+
+  let s:braille = split('"⠉⠒⠤⣀', '\zs')
+  function! Braille()
+    let len = len(s:braille)
+    let [cur, max] = [line('.'), line('$')]
+    let pos  = min([len * (cur - 1) / max([1, max - 1]), len - 1])
+    return s:braille[pos]
+  endfunction
+
+  hi def link User1 TablineFill
+  let s:cherry = emoji#for('cherry_blossom')
+  function! MyStatusLine()
+    let mod = '%{S_modified()}'
+    let ro  = "%{&readonly ? emoji#for('lock') . ' ' : ''}"
+    let ft  = '%{S_filetype()}'
+    let fug = ' %{S_fugitive()}'
+    let sep = ' %= '
+    let pos = ' %l,%c%V '
+    let pct = ' %P '
+
+    return s:cherry.' [%n] %F %<'.mod.ro.ft.fug.sep.pos.'%{Braille()}%*'.pct.s:cherry
+  endfunction
+
+  " Note that the "%!" expression is evaluated in the context of the
+  " current window and buffer, while %{} items are evaluated in the
+  " context of the window that the statusline belongs to.
+  set statusline=%!MyStatusLine()
+endif
 " ============================================================================
