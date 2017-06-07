@@ -25,18 +25,9 @@ endif
 " My plugins
 Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
-Plug 'junegunn/vim-emoji'
-Plug 'junegunn/vim-pseudocl'
-Plug 'junegunn/vim-slash'
-Plug 'junegunn/vim-fnr'
-Plug 'junegunn/vim-peekaboo'
-Plug 'junegunn/vim-journal'
-Plug 'junegunn/seoul256.vim'
 Plug 'junegunn/gv.vim'
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
-Plug 'junegunn/vader.vim',  { 'on': 'Vader', 'for': 'vader' }
-Plug 'junegunn/vim-ruby-x', { 'on': 'RubyX' }
+Plug 'junegunn/vim-pseudocl'
+Plug 'junegunn/vim-fnr'
 Plug 'junegunn/fzf',        { 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
@@ -49,9 +40,7 @@ endif
 unlet! g:plug_url_format
 
 " Colors
-Plug 'tomasr/molokai'
-Plug 'chriskempson/vim-tomorrow-theme'
-Plug 'AlessandroYorba/Monrovia'
+Plug 'altercation/vim-colors-solarized'
 
 " Edit
 Plug 'tpope/vim-repeat'
@@ -69,7 +58,7 @@ function! BuildYCM(info)
     !./install.py --clang-completer --gocode-completer
   endif
 endfunction
-Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp'], 'do': function('BuildYCM') }
+Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 
 " Plug 'SirVer/ultisnips', { 'on': '#InsertEnter' }
 " Plug 'honza/vim-snippets'
@@ -102,24 +91,13 @@ if v:version >= 703
 endif
 
 " Lang
-if v:version >= 703
-  Plug 'vim-ruby/vim-ruby'
-  Plug 'kovisoft/paredit', { 'for': 'clojure' }
-  Plug 'junegunn/vim-fireplace', { 'for': 'clojure' }
-  Plug 'guns/vim-clojure-static'
-  Plug 'guns/vim-clojure-highlight'
-  Plug 'guns/vim-slamhound'
-  Plug 'venantius/vim-cljfmt'
-endif
 Plug 'tpope/vim-bundler'
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plug 'groenewege/vim-less'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'kchmck/vim-coffee-script'
 Plug 'slim-template/vim-slim'
 Plug 'Glench/Vim-Jinja2-Syntax'
-Plug 'rust-lang/rust.vim'
 Plug 'tpope/vim-rails',      { 'for': []      }
 Plug 'derekwyatt/vim-scala'
 Plug 'honza/dockerfile.vim'
@@ -302,20 +280,43 @@ silent! if emoji#available()
   set statusline=%!MyStatusLine()
 endif
 
-set pastetoggle=<F9>
+" 代码折叠
+set foldenable
+" 折叠方法
+" manual    手工折叠
+" indent    使用缩进表示折叠
+" expr      使用表达式定义折叠
+" syntax    使用语法定义折叠
+" diff      对没有更改的文本进行折叠
+" marker    使用标记进行折叠, 默认标记是 {{{ 和 }}}
+set foldmethod=indent
+set foldlevel=99
+" 代码折叠自定义快捷键 <leader>z
+let g:FoldMethod = 0
+map <leader>zz :call ToggleFold()<cr>
+fun! ToggleFold()
+    if g:FoldMethod == 0
+        exe "normal! zM"
+        let g:FoldMethod = 1
+    else
+        exe "normal! zR"
+        let g:FoldMethod = 0
+    endif
+endfun
+
+
 set modelines=2
 set synmaxcol=1000
-
-" For MacVim
-set noimd
-set imi=1
-set ims=-1
 
 " ctags
 set tags=./tags;/
 
-" Annoying temporary files
-set backupdir=/tmp//,.
+" 取消备份。 视情况自己改
+set nobackup
+" " 关闭交换文件
+set noswapfile
+set wildignore=*.swp,*.bak,*.pyc,*.class,.svn
+
 set directory=/tmp//,.
 if v:version >= 703
   set undodir=/tmp//,.
@@ -348,13 +349,6 @@ if exists('&fixeol')
   set nofixeol
 endif
 
-if has('gui_running')
-  set guifont=Menlo:h14 columns=80 lines=40
-  silent! colo seoul256-light
-else
-  silent! colo seoul256
-endif
-
 " }}}
 " ============================================================================
 " MAPPINGS {{{
@@ -368,8 +362,6 @@ noremap <C-F> <C-D>
 noremap <C-B> <C-U>
 
 " Save
-inoremap <C-s>     <C-O>:update<cr>
-nnoremap <C-s>     :update<cr>
 nnoremap <leader>s :update<cr>
 nnoremap <leader>w :update<cr>
 
@@ -380,11 +372,12 @@ if $TERM =~ 'screen'
 endif
 
 " Quit
-inoremap <C-Q>     <esc>:q<cr>
-nnoremap <C-Q>     :q<cr>
-vnoremap <C-Q>     <esc>
 nnoremap <Leader>q :q<cr>
 nnoremap <Leader>Q :qa!<cr>
+
+" 设置 退出vim后，内容显示在终端屏幕, 可以用于查看和复制, 不需要可以去掉
+" " 好处：误删什么的，如果以前屏幕打开，可以找回
+set t_ti= t_te=
 
 " Tags
 nnoremap <C-]> g<C-]>
@@ -393,13 +386,38 @@ nnoremap g[ :pop<cr>
 " Jump list (to newer position)
 nnoremap <C-p> <C-i>
 
-" <F10> | NERD Tree
-nnoremap <F10> :NERDTreeToggle<cr>
+" F1 废弃这个键,防止调出系统帮助
+noremap <F1> <Esc>"
 
-" <F11> | Tagbar
+function! HideNumber() " 为方便复制，用<F2>开启/关闭行号显示:
+  if(&relativenumber == &number)
+    set relativenumber! number!
+  elseif(&number)
+    set number!
+  else
+    set relativenumber!
+  endif
+  set number?
+endfunc
+nnoremap <F2> :call HideNumber()<CR> 
+nnoremap <F3> :set list! list?<CR> " F3 显示可打印字符开关
+nnoremap <F4> :set wrap! wrap?<CR> " F4 换行开关
+noremap <F6> :exec exists('syntax_on') ? 'syn off' : 'syn on'<CR> " F6 语法开关，关闭语法可以加快大文件的展示
+" F5 set paste问题已解决, 粘贴代码前不需要按F5了
+set pastetoggle=<F5>  
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+" NERD Tree
+nnoremap <leader>n :NERDTreeToggle<cr>
+
+" <F9> | Tagbar
 if v:version >= 703
-  inoremap <F11> <esc>:TagbarToggle<cr>
-  nnoremap <F11> :TagbarToggle<cr>
+  inoremap <F9> <esc>:TagbarToggle<cr>
+  nnoremap <F9> :TagbarToggle<cr>
   let g:tagbar_sort = 0
 endif
 
@@ -470,33 +488,6 @@ nnoremap [t :tabp<cr>
 " ----------------------------------------------------------------------------
 nnoremap <tab>   <c-w>w
 nnoremap <S-tab> <c-w>W
-
-" ----------------------------------------------------------------------------
-" tmux
-" ----------------------------------------------------------------------------
-function! s:tmux_send(content, dest) range
-  let dest = empty(a:dest) ? input('To which pane? ') : a:dest
-  let tempfile = tempname()
-  call writefile(split(a:content, "\n", 1), tempfile, 'b')
-  call system(printf('tmux load-buffer -b vim-tmux %s \; paste-buffer -d -b vim-tmux -t %s',
-        \ shellescape(tempfile), shellescape(dest)))
-  call delete(tempfile)
-endfunction
-
-function! s:tmux_map(key, dest)
-  execute printf('nnoremap <silent> %s "tyy:call <SID>tmux_send(@t, "%s")<cr>', a:key, a:dest)
-  execute printf('xnoremap <silent> %s "ty:call <SID>tmux_send(@t, "%s")<cr>gv', a:key, a:dest)
-endfunction
-
-call s:tmux_map('<leader>tt', '')
-call s:tmux_map('<leader>th', '.left')
-call s:tmux_map('<leader>tj', '.bottom')
-call s:tmux_map('<leader>tk', '.top')
-call s:tmux_map('<leader>tl', '.right')
-call s:tmux_map('<leader>ty', '.top-left')
-call s:tmux_map('<leader>to', '.top-right')
-call s:tmux_map('<leader>tn', '.bottom-left')
-call s:tmux_map('<leader>t.', '.bottom-right')
 
 " ----------------------------------------------------------------------------
 " <tab> / <s-tab> / <c-v><tab> | super-duper-tab
@@ -727,71 +718,6 @@ function! s:root()
 endfunction
 command! Root call s:root()
 
-" ----------------------------------------------------------------------------
-" <F5> / <F6> | Run script
-" ----------------------------------------------------------------------------
-function! s:run_this_script(output)
-  let head   = getline(1)
-  let pos    = stridx(head, '#!')
-  let file   = expand('%:p')
-  let ofile  = tempname()
-  let rdr    = " 2>&1 | tee ".ofile
-  let win    = winnr()
-  let prefix = a:output ? 'silent !' : '!'
-  " Shebang found
-  if pos != -1
-    execute prefix.strpart(head, pos + 2).' '.file.rdr
-  " Shebang not found but executable
-  elseif executable(file)
-    execute prefix.file.rdr
-  elseif &filetype == 'ruby'
-    execute prefix.'/usr/bin/env ruby '.file.rdr
-  elseif &filetype == 'tex'
-    execute prefix.'latex '.file. '; [ $? -eq 0 ] && xdvi '. expand('%:r').rdr
-  elseif &filetype == 'dot'
-    let svg = expand('%:r') . '.svg'
-    let png = expand('%:r') . '.png'
-    " librsvg >> imagemagick + ghostscript
-    execute 'silent !dot -Tsvg '.file.' -o '.svg.' && '
-          \ 'rsvg-convert -z 2 '.svg.' > '.png.' && open '.png.rdr
-  else
-    return
-  end
-  redraw!
-  if !a:output | return | endif
-
-  " Scratch buffer
-  if exists('s:vim_exec_buf') && bufexists(s:vim_exec_buf)
-    execute bufwinnr(s:vim_exec_buf).'wincmd w'
-    %d
-  else
-    silent!  bdelete [vim-exec-output]
-    silent!  vertical botright split new
-    silent!  file [vim-exec-output]
-    setlocal buftype=nofile bufhidden=wipe noswapfile
-    let      s:vim_exec_buf = winnr()
-  endif
-  execute 'silent! read' ofile
-  normal! gg"_dd
-  execute win.'wincmd w'
-endfunction
-nnoremap <silent> <F5> :call <SID>run_this_script(0)<cr>
-nnoremap <silent> <F6> :call <SID>run_this_script(1)<cr>
-
-" ----------------------------------------------------------------------------
-" <F8> | Color scheme selector
-" ----------------------------------------------------------------------------
-function! s:rotate_colors()
-  if !exists('s:colors')
-    let s:colors = s:colors()
-  endif
-  let name = remove(s:colors, 0)
-  call add(s:colors, name)
-  execute 'colorscheme' name
-  redraw
-  echo name
-endfunction
-nnoremap <silent> <F8> :call <SID>rotate_colors()<cr>
 
 " ----------------------------------------------------------------------------
 " :Shuffle | Shuffle selected lines
@@ -1758,8 +1684,6 @@ augroup vimrc
   au BufNewFile,BufRead,InsertLeave * silent! match ExtraWhitespace /\s\+$/
   au InsertEnter * silent! match ExtraWhitespace /\s\+\%#\@<!$/
 
-  " Unset paste on InsertLeave
-  au InsertLeave * silent! set nopaste
 
   " Close preview window
   if exists('##CompleteDone')
@@ -1797,4 +1721,49 @@ if filereadable(s:local_vimrc)
 endif
 
 " }}}
+"
+" ----------------------------------------------------------------------------
+" <F8> | Color scheme selector
+" 防止tmux下vim的背景色显示异常
+if &term =~ '256color'
+  " disable Background Color Erase (BCE) so that color schemes
+  " render properly when inside 256-color tmux and GNU screen.
+  " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+  set t_ut=
+endif
+" solarized {{{
+    let g:solarized_termtrans=1
+    let g:solarized_contrast="normal"
+    let g:solarized_visibility="normal"
+    " let g:solarized_termcolors=256
+" }}}
+function! s:rotate_colors()
+  if !exists('s:colors')
+    let s:colors = s:colors()
+  endif
+  let name = remove(s:colors, 0)
+  call add(s:colors, name)
+  execute 'colorscheme' name
+  redraw
+  echo name
+endfunction
+nnoremap <silent> <F8> :call <SID>rotate_colors()<cr>
+
+set background=light
+set t_Co=256
+colorscheme solarized
+" 设置标记一列的背景颜色和数字一行颜色一致
+hi! link SignColumn   LineNr
+hi! link ShowMarksHLl DiffAdd
+hi! link ShowMarksHLu DiffChange
+
+" for error highlight，防止错误整行标红导致看不清
+highlight clear SpellBad
+highlight SpellBad term=standout ctermfg=1 term=underline cterm=underline
+highlight clear SpellCap
+highlight SpellCap term=underline cterm=underline
+highlight clear SpellRare
+highlight SpellRare term=underline cterm=underline
+highlight clear SpellLocal
+highlight SpellLocal term=underline cterm=underline
 " ============================================================================
