@@ -4,7 +4,7 @@ echo $1
 timestamp=`date "+%Y-%m-%d %H:%M:%S"` 
 if [ $# == 1 ]
 then
-  timestamp = $1 
+  timestamp=$1 
 fi
 echo "名字：$timestamp"
 git add . 
