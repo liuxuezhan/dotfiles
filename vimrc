@@ -1547,6 +1547,11 @@ map <Left> <Nop>
 map <Right> <Nop>
 map <Up> <Nop>
 map <Down> <Nop>
+
+" ============================================================================
+"buffer
+" Remember info about open buffers on close
+set viminfo^=%
 noremap <left> :bp<CR>
 noremap <right> :bn<CR>
 " ============================================================================
