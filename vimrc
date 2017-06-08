@@ -56,6 +56,10 @@ Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'rhysd/vim-grammarous'
 Plug 'beloglazov/vim-online-thesaurus'
+" 选中区块
+Plug 'terryma/vim-expand-region'
+" 多光标选中编辑
+Plug 'terryma/vim-multiple-cursors'
 
 function! BuildYCM(info)
   if a:info.status == 'installed' || a:info.force
@@ -304,18 +308,15 @@ nnoremap <F2> :call HideNumber()<CR>
 nnoremap <F3> :set list! list?<CR> " F3 显示可打印字符开关
 nnoremap <F4> :set wrap! wrap?<CR> " F4 换行开关
 noremap <F6> :exec exists('syntax_on') ? 'syn off' : 'syn on'<CR> " F6 语法开关，关闭语法可以加快大文件的展示
+
 " F5 set paste问题已解决, 粘贴代码前不需要按F5了
 set pastetoggle=<F5>  
-function! XTermPasteBegin()
-  set pastetoggle=<Esc>[201~
-  set paste
-  return ""
-endfunction
-inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+set paste
+
 " <F9> | Tagbar
 if v:version >= 703
-  inoremap <F9> <esc>:TagbarToggle<cr>
-  nnoremap <F9> :TagbarToggle<cr>
+  inoremap <leader>b <esc> :TagbarToggle<cr>
+  nnoremap <leader>b :TagbarToggle<cr>
   let g:tagbar_sort = 0
 endif
 
@@ -621,63 +622,6 @@ ruby << RB
 RB
 endfunction
 command! -range Shuffle <line1>,<line2>call s:shuffle()
-
-" ----------------------------------------------------------------------------
-" Syntax highlighting in code snippets
-" ----------------------------------------------------------------------------
-function! s:syntax_include(lang, b, e, inclusive)
-  let syns = split(globpath(&rtp, "syntax/".a:lang.".vim"), "\n")
-  if empty(syns)
-    return
-  endif
-
-  if exists('b:current_syntax')
-    let csyn = b:current_syntax
-    unlet b:current_syntax
-  endif
-
-  let z = "'" " Default
-  for nr in range(char2nr('a'), char2nr('z'))
-    let char = nr2char(nr)
-    if a:b !~ char && a:e !~ char
-      let z = char
-      break
-    endif
-  endfor
-
-  silent! exec printf("syntax include @%s %s", a:lang, syns[0])
-  if a:inclusive
-    exec printf('syntax region %sSnip start=%s\(%s\)\@=%s ' .
-                \ 'end=%s\(%s\)\@<=\(\)%s contains=@%s containedin=ALL',
-                \ a:lang, z, a:b, z, z, a:e, z, a:lang)
-  else
-    exec printf('syntax region %sSnip matchgroup=Snip start=%s%s%s ' .
-                \ 'end=%s%s%s contains=@%s containedin=ALL',
-                \ a:lang, z, a:b, z, z, a:e, z, a:lang)
-  endif
-
-  if exists('csyn')
-    let b:current_syntax = csyn
-  endif
-endfunction
-
-function! s:file_type_handler()
-  if &ft =~ 'jinja' && &ft != 'jinja'
-    call s:syntax_include('jinja', '{{', '}}', 1)
-    call s:syntax_include('jinja', '{%', '%}', 1)
-  elseif &ft =~ 'mkd\|markdown'
-    for lang in ['ruby', 'yaml', 'vim', 'sh', 'bash:sh', 'python', 'java', 'c',
-          \ 'clojure', 'clj:clojure', 'scala', 'sql', 'gnuplot']
-      call s:syntax_include(split(lang, ':')[-1], '```'.split(lang, ':')[0], '```', 0)
-    endfor
-
-    highlight def link Snip Folded
-    setlocal textwidth=78
-    setlocal completefunc=emoji#complete
-  elseif &ft == 'sh'
-    call s:syntax_include('ruby', '#!ruby', '/\%$', 1)
-  endif
-endfunction
 
 " ----------------------------------------------------------------------------
 " SaveMacro / LoadMacro
@@ -1192,9 +1136,9 @@ let g:plug_pwindow = 'vertical rightbelow new'
 let g:matchparen_insert_timeout=5
 
 " ----------------------------------------------------------------------------
-" vim-commentary
+" vim-commentary 注释
 " ----------------------------------------------------------------------------
-map  gc  <Plug>Commentary
+map  cc  <Plug>Commentary
 nmap gcc <Plug>CommentaryLine
 
 " ----------------------------------------------------------------------------
@@ -1570,5 +1514,30 @@ let g:ackprg = "ag --nocolor --nogroup --column"
 set grepprg=ag\ --nogroup\ --nocolor
 command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 nnoremap \ :Ag<CR>
+" ============================================================================
+" ################### 快速选中 ###################
 
+" expandregion {{{
+    " map + <Plug>(expand_region_expand)
+    " map _ <Plug>(expand_region_shrink)
+    vmap v <Plug>(expand_region_expand)
+    vmap V <Plug>(expand_region_shrink)
+    " Extend the global default
+    call expand_region#custom_text_objects({
+      \ 'a]' :1,
+      \ 'ab' :1,
+      \ 'aB' :1,
+      \ 'ii' :0,
+      \ 'ai' :0,
+      \ })
+" }}}
+
+" multiplecursors {{{
+    let g:multi_cursor_use_default_mapping=0
+    " Default mapping
+    let g:multi_cursor_next_key='<C-m>'
+    let g:multi_cursor_prev_key='<C-p>'
+    let g:multi_cursor_skip_key='<C-x>'
+    let g:multi_cursor_quit_key='<Esc>'
+" }}}
 
