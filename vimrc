@@ -1441,13 +1441,6 @@ if &term =~ '256color'
   " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
   set t_ut=
 endif
-" solarized {{{
-    let g:solarized_termtrans=1
-    let g:solarized_contrast="normal"
-    let g:solarized_visibility="normal"
-    " let g:solarized_termcolors=256
-" }}}
-function! s:rotate_colors()
   if !exists('s:colors')
     let s:colors = s:colors()
   endif
@@ -1459,6 +1452,10 @@ function! s:rotate_colors()
 endfunction
 nnoremap <silent> <F8> :call <SID>rotate_colors()<cr>
 
+let g:solarized_termtrans=1
+let g:solarized_contrast="normal"
+let g:solarized_visibility="normal"
+function! s:rotate_colors()
 set background=light
 set t_Co=256
 colorscheme solarized
