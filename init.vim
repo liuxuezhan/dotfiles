@@ -1,1 +1,1 @@
-/root/dotfiles/vimrc
+/home/liuxuezhan/dotfiles/vimrc
