@@ -26,6 +26,10 @@ Plug 'rking/ag.vim'
 " airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+" 选中区块
+Plug 'terryma/vim-expand-region'
+" 多光标选中编辑
+Plug 'terryma/vim-multiple-cursors'
 " My plugins
 Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
@@ -56,10 +60,6 @@ Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'rhysd/vim-grammarous'
 Plug 'beloglazov/vim-online-thesaurus'
-" 选中区块
-Plug 'terryma/vim-expand-region'
-" 多光标选中编辑
-Plug 'terryma/vim-multiple-cursors'
 
 function! BuildYCM(info)
   if a:info.status == 'installed' || a:info.force
@@ -308,15 +308,14 @@ nnoremap <F2> :call HideNumber()<CR>
 nnoremap <F3> :set list! list?<CR> " F3 显示可打印字符开关
 nnoremap <F4> :set wrap! wrap?<CR> " F4 换行开关
 noremap <F6> :exec exists('syntax_on') ? 'syn off' : 'syn on'<CR> " F6 语法开关，关闭语法可以加快大文件的展示
-
 " F5 set paste问题已解决, 粘贴代码前不需要按F5了
-set pastetoggle=<F5>  
 set paste
+set pastetoggle=<F5>  
 
 " <F9> | Tagbar
 if v:version >= 703
-  inoremap <leader>b <esc> :TagbarToggle<cr>
-  nnoremap <leader>b :TagbarToggle<cr>
+  inoremap <F9> <esc>:TagbarToggle<cr>
+  nnoremap <F9> :TagbarToggle<cr>
   let g:tagbar_sort = 0
 endif
 
@@ -622,6 +621,63 @@ ruby << RB
 RB
 endfunction
 command! -range Shuffle <line1>,<line2>call s:shuffle()
+
+" ----------------------------------------------------------------------------
+" Syntax highlighting in code snippets
+" ----------------------------------------------------------------------------
+function! s:syntax_include(lang, b, e, inclusive)
+  let syns = split(globpath(&rtp, "syntax/".a:lang.".vim"), "\n")
+  if empty(syns)
+    return
+  endif
+
+  if exists('b:current_syntax')
+    let csyn = b:current_syntax
+    unlet b:current_syntax
+  endif
+
+  let z = "'" " Default
+  for nr in range(char2nr('a'), char2nr('z'))
+    let char = nr2char(nr)
+    if a:b !~ char && a:e !~ char
+      let z = char
+      break
+    endif
+  endfor
+
+  silent! exec printf("syntax include @%s %s", a:lang, syns[0])
+  if a:inclusive
+    exec printf('syntax region %sSnip start=%s\(%s\)\@=%s ' .
+                \ 'end=%s\(%s\)\@<=\(\)%s contains=@%s containedin=ALL',
+                \ a:lang, z, a:b, z, z, a:e, z, a:lang)
+  else
+    exec printf('syntax region %sSnip matchgroup=Snip start=%s%s%s ' .
+                \ 'end=%s%s%s contains=@%s containedin=ALL',
+                \ a:lang, z, a:b, z, z, a:e, z, a:lang)
+  endif
+
+  if exists('csyn')
+    let b:current_syntax = csyn
+  endif
+endfunction
+
+function! s:file_type_handler()
+  if &ft =~ 'jinja' && &ft != 'jinja'
+    call s:syntax_include('jinja', '{{', '}}', 1)
+    call s:syntax_include('jinja', '{%', '%}', 1)
+  elseif &ft =~ 'mkd\|markdown'
+    for lang in ['ruby', 'yaml', 'vim', 'sh', 'bash:sh', 'python', 'java', 'c',
+          \ 'clojure', 'clj:clojure', 'scala', 'sql', 'gnuplot']
+      call s:syntax_include(split(lang, ':')[-1], '```'.split(lang, ':')[0], '```', 0)
+    endfor
+
+    highlight def link Snip Folded
+    setlocal textwidth=78
+    setlocal completefunc=emoji#complete
+  elseif &ft == 'sh'
+    call s:syntax_include('ruby', '#!ruby', '/\%$', 1)
+  endif
+endfunction
 
 " ----------------------------------------------------------------------------
 " SaveMacro / LoadMacro
@@ -1136,9 +1192,9 @@ let g:plug_pwindow = 'vertical rightbelow new'
 let g:matchparen_insert_timeout=5
 
 " ----------------------------------------------------------------------------
-" vim-commentary 注释
+" vim-commentary
 " ----------------------------------------------------------------------------
-map  cc  <Plug>Commentary
+map  gc  <Plug>Commentary
 nmap gcc <Plug>CommentaryLine
 
 " ----------------------------------------------------------------------------
@@ -1441,6 +1497,13 @@ if &term =~ '256color'
   " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
   set t_ut=
 endif
+" solarized {{{
+    let g:solarized_termtrans=1
+    let g:solarized_contrast="normal"
+    let g:solarized_visibility="normal"
+    " let g:solarized_termcolors=256
+" }}}
+function! s:rotate_colors()
   if !exists('s:colors')
     let s:colors = s:colors()
   endif
@@ -1452,10 +1515,6 @@ endif
 endfunction
 nnoremap <silent> <F8> :call <SID>rotate_colors()<cr>
 
-let g:solarized_termtrans=1
-let g:solarized_contrast="normal"
-let g:solarized_visibility="normal"
-function! s:rotate_colors()
 set background=light
 set t_Co=256
 colorscheme solarized
