@@ -1,4 +1,3 @@
-" vim: set foldmethod=marker foldlevel=0:
 " ============================================================================
 " .vimrc of Junegunn Choi {{{
 " ============================================================================
@@ -26,10 +25,6 @@ Plug 'rking/ag.vim'
 " airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" 选中区块
-Plug 'terryma/vim-expand-region'
-" 多光标选中编辑
-Plug 'terryma/vim-multiple-cursors'
 " My plugins
 Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
@@ -157,7 +152,6 @@ set nojoinspaces
 set diffopt=filler,vertical
 set autoread
 set clipboard=unnamed
-set foldlevelstart=99
 set grepformat=%f:%l:%c:%m,%f:%l:%m
 set completeopt=menuone,preview
 set nocursorline
@@ -188,30 +182,6 @@ endif
 " %V Virtual column
 " %P Percentage
 " %#HighlightGroup#
-
-" 代码折叠
-set foldenable
-" 折叠方法
-" manual    手工折叠
-" indent    使用缩进表示折叠
-" expr      使用表达式定义折叠
-" syntax    使用语法定义折叠
-" diff      对没有更改的文本进行折叠
-" marker    使用标记进行折叠, 默认标记是 {{{ 和 }}}
-set foldmethod=indent
-set foldlevel=99
-" 代码折叠自定义快捷键 <leader>z
-let g:FoldMethod = 0
-map <leader>zz :call ToggleFold()<cr>
-fun! ToggleFold()
-    if g:FoldMethod == 0
-        exe "normal! zM"
-        let g:FoldMethod = 1
-    else
-        exe "normal! zR"
-        let g:FoldMethod = 0
-    endif
-endfun
 
 
 set modelines=2
@@ -1554,40 +1524,12 @@ if v:version >= 703
   nnoremap <F10> :TagbarToggle<cr>
   let g:tagbar_sort = 0
 endif
-
-
 " ============================================================================
 " 搜索ag.vim
  let g:ackprg = "ag --nocolor --nogroup --column"
  set grepprg=ag\ --nogroup\ --nocolor
-" command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+ command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 nnoremap \ :Ag<CR>
-" ============================================================================
-" ################### 快速选中 ###################
-
-" expandregion {{{
-    " map + <Plug>(expand_region_expand)
-    " map _ <Plug>(expand_region_shrink)
-    vmap v <Plug>(expand_region_expand)
-    vmap V <Plug>(expand_region_shrink)
-    " Extend the global default
-    call expand_region#custom_text_objects({
-      \ 'a]' :1,
-      \ 'ab' :1,
-      \ 'aB' :1,
-      \ 'ii' :0,
-      \ 'ai' :0,
-      \ })
-" }}}
-
-" multiplecursors {{{
-    let g:multi_cursor_use_default_mapping=0
-    " Default mapping
-    let g:multi_cursor_next_key='<C-m>'
-    let g:multi_cursor_prev_key='<C-p>'
-    let g:multi_cursor_skip_key='<C-x>'
-    let g:multi_cursor_quit_key='<Esc>'
-" }}}
 " ============================================================================
 " 缩进配置
 " Smart indent
