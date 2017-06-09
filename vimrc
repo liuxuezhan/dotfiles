@@ -303,7 +303,6 @@ nnoremap <F3> :set list! list?<CR> " F3 显示可打印字符开关
 nnoremap <F4> :set wrap! wrap?<CR> " F4 换行开关
 noremap <F6> :exec exists('syntax_on') ? 'syn off' : 'syn on'<CR> " F6 语法开关，关闭语法可以加快大文件的展示
 " F5 set paste问题已解决, 粘贴代码前不需要按F5了
-set paste
 set pastetoggle=<F5>  
 
 " jk | Escaping!
@@ -1527,8 +1526,6 @@ let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#whitespace#symbol = '!'
 map <Left> <Nop>
 map <Right> <Nop>
-map <Up> <Nop>
-map <Down> <Nop>
 
 " ============================================================================
 "buffer
