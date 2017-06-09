@@ -1440,7 +1440,6 @@ endif
 " }}}
 "
 " ----------------------------------------------------------------------------
-" <F8> | Color scheme selector
 " 防止tmux下vim的背景色显示异常
 if &term =~ '256color'
   " disable Background Color Erase (BCE) so that color schemes
@@ -1464,7 +1463,7 @@ function! s:rotate_colors()
   redraw
   echo name
 endfunction
-nnoremap <silent> <F8> :call <SID>rotate_colors()<cr>
+nnoremap <silent> <F7> :call <SID>rotate_colors()<cr>
 
 set background=light
 set t_Co=256
@@ -1505,7 +1504,7 @@ noremap <left> :bp<CR>
 noremap <right> :bn<CR>
 " ============================================================================
 " NERD Tree
-nnoremap <F9> :NERDTreeToggle<cr>
+nnoremap <F8> :NERDTreeToggle<cr>
 let NERDTreeHighlightCursorline=1
 let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
@@ -1521,7 +1520,7 @@ nnoremap ; :
 " ============================================================================
 " tagbar 
 if v:version >= 703
-  nnoremap <F10> :TagbarToggle<cr>
+  nnoremap <F9> :TagbarToggle<cr>
   let g:tagbar_sort = 0
 endif
 " ============================================================================
@@ -1551,3 +1550,4 @@ set smarttab
 set expandtab
 " 缩进时，取整 use multiple of shiftwidth when indenting with '<' and '>'
 set shiftround
+
