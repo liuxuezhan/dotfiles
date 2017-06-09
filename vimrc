@@ -1180,7 +1180,7 @@ let g:matchparen_insert_timeout=5
 " ----------------------------------------------------------------------------
 " vim-commentary
 " ----------------------------------------------------------------------------
-map  gc  <Plug>Commentary
+map  cc  <Plug>Commentary
 nmap gcc <Plug>CommentaryLine
 
 " ----------------------------------------------------------------------------
@@ -1558,9 +1558,9 @@ endif
 
 " ============================================================================
 " 搜索ag.vim
-let g:ackprg = "ag --nocolor --nogroup --column"
-set grepprg=ag\ --nogroup\ --nocolor
-command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+ let g:ackprg = "ag --nocolor --nogroup --column"
+ set grepprg=ag\ --nogroup\ --nocolor
+" command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 nnoremap \ :Ag<CR>
 " ============================================================================
 " ################### 快速选中 ###################
