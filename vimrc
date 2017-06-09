@@ -1535,7 +1535,7 @@ noremap <left> :bp<CR>
 noremap <right> :bn<CR>
 " ============================================================================
 " NERD Tree
-nnoremap <leader>n :NERDTreeToggle<cr>
+nnoremap <F9> :NERDTreeToggle<cr>
 let NERDTreeHighlightCursorline=1
 let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
@@ -1551,7 +1551,7 @@ nnoremap ; :
 " ============================================================================
 " tagbar 
 if v:version >= 703
-  nnoremap <leader>b :TagbarToggle<cr>
+  nnoremap <F10> :TagbarToggle<cr>
   let g:tagbar_sort = 0
 endif
 
