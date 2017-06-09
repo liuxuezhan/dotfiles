@@ -33,18 +33,6 @@ curl --insecure -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vi
     vim -u $HOME/.vimrc +PlugInstall! +PlugClean! +qall
     export SHELL=$system_shell
 
-  echo "Step4: compile YouCompleteMe"
-  echo "If error,you need to compile it yourself"
-  echo "cd $CURRENT_DIR/plugged/YouCompleteMe/ && python install.py --clang-completer"
-  cd $CURRENT_DIR/plugged/YouCompleteMe/
-  git submodule update --init --recursive
-  if [ `which clang` ]   # check system clang
-  then
-    python install.py --clang-completer --system-libclang   # use system clang
-  else
-    python install.py --clang-completer
-  fi
-
   echo  "Install Done!"
 
 
