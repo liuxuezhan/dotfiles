@@ -306,13 +306,6 @@ noremap <F6> :exec exists('syntax_on') ? 'syn off' : 'syn on'<CR> " F6 语法开
 set paste
 set pastetoggle=<F5>  
 
-" <F9> | Tagbar
-if v:version >= 703
-  inoremap <F9> <esc>:TagbarToggle<cr>
-  nnoremap <F9> :TagbarToggle<cr>
-  let g:tagbar_sort = 0
-endif
-
 " jk | Escaping!
 inoremap jk <Esc>
 xnoremap jk <Esc>
@@ -1557,6 +1550,14 @@ let NERDTreeWinPos = "right"
 let NERDTreeChDirMode = 2"改变跟目录
 let NERDTreeQuitOnOpen = 1"打开关闭
 nnoremap ; :
+
+" ============================================================================
+" tagbar 
+if v:version >= 703
+  nnoremap <leader>b :TagbarToggle<cr>
+  let g:tagbar_sort = 0
+endif
+
 
 " ============================================================================
 " 搜索ag.vim
