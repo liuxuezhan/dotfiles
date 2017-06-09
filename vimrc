@@ -61,12 +61,6 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'rhysd/vim-grammarous'
 Plug 'beloglazov/vim-online-thesaurus'
 
-function! BuildYCM(info)
-  if a:info.status == 'installed' || a:info.force
-    !./install.py --clang-completer --gocode-completer
-  endif
-endfunction
-Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 
 " Plug 'SirVer/ultisnips', { 'on': '#InsertEnter' }
 " Plug 'honza/vim-snippets'
@@ -1366,11 +1360,6 @@ endfunction
 
 autocmd vimrc FileType vim inoremap <buffer> <c-x><c-v> <c-r>=VimAwesomeComplete()<cr>
 
-" ----------------------------------------------------------------------------
-" YCM
-" ----------------------------------------------------------------------------
-autocmd vimrc FileType c,cpp,go nnoremap <buffer> ]d :YcmCompleter GoTo<CR>
-autocmd vimrc FileType c,cpp    nnoremap <buffer> K  :YcmCompleter GetType<CR>
 
 " }}}
 " ============================================================================
