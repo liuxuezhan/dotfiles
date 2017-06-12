@@ -1493,15 +1493,6 @@ let g:airline_powerline_fonts = 1
 " 闭状态显示空白符号计数
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#whitespace#symbol = '!'
-map <Left> <Nop>
-map <Right> <Nop>
-
-" ============================================================================
-"buffer
-" Remember info about open buffers on close
-set viminfo^=%
-noremap <left> :bp<CR>
-noremap <right> :bn<CR>
 " ============================================================================
 " NERD Tree
 nnoremap <F8> :NERDTreeToggle<cr>
@@ -1550,4 +1541,22 @@ set smarttab
 set expandtab
 " 缩进时，取整 use multiple of shiftwidth when indenting with '<' and '>'
 set shiftround
+" ============================================================================
+" diff配置
+map <Up> <Nop>
+map <Down> <Nop>
+nnoremap <Up> [c
+nnoremap <Down> ]c
+map <left> <Nop>
+map <right> <Nop>
+nnoremap <left> do
+nnoremap <right> dp
 
+" ============================================================================
+"buffer
+" Remember info about open buffers on close
+set viminfo^=%
+map <PageUp> <Nop>
+map <PageDown> <Nop>
+noremap <PageUp> :bp<CR>
+noremap <PageDown> :bn<CR>
