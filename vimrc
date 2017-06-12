@@ -1519,7 +1519,7 @@ endif
  let g:ackprg = "ag --nocolor --nogroup --column"
  set grepprg=ag\ --nogroup\ --nocolor
  command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-nnoremap \ :Ag<CR>
+nnoremap \ :Ag<space>
 " ============================================================================
 " 缩进配置
 " Smart indent
