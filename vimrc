@@ -1550,8 +1550,11 @@ map <left> <Nop>
 map <right> <Nop>
 nnoremap <left> do
 nnoremap <right> dp
+set nofoldenable
+nnoremap z zr
 
 " ============================================================================
 "buffer
 " Remember info about open buffers on close
 set viminfo^=%
+
