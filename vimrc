@@ -20,8 +20,6 @@ if s:darwin
 else
   let $GIT_SSL_NO_VERIFY = 'true'
 endif
-"搜索
-Plug 'rking/ag.vim'
 " airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -397,7 +395,7 @@ endfunction
 if has_key(g:plugs, 'ultisnips')
   " UltiSnips will be loaded only when tab is first pressed in insert mode
   if !exists(':UltiSnipsEdit')
-    inoremap <silent> <Plug>(tab) <c-r>=plug#load('ultisnips')?UltiSnips#ExpandSnippet():''<cr>
+    inoremap <silent> <Plug>(tab) <g-r>=plug#load('ultisnips')?UltiSnips#ExpandSnippet():''<cr>
     imap <tab> <Plug>(tab)
   endif
 
@@ -1351,8 +1349,7 @@ inoremap <expr> <c-x><c-t> fzf#complete('tmuxwords.rb --all-but-current --scroll
 imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-imap <c-x><c-l> <plug>(fzf-complete-line)
-
+imap <c-x><c-l> <plug>(fzf-complete-line) 
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
@@ -1487,7 +1484,7 @@ highlight SpellLocal term=underline cterm=underline
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
-let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme="aurora" 
 let g:airline_powerline_fonts = 1
 " 闭状态显示空白符号计数
@@ -1516,10 +1513,12 @@ if v:version >= 703
 endif
 " ============================================================================
 " 搜索ag.vim
- let g:ackprg = "ag --nocolor --nogroup --column"
- set grepprg=ag\ --nogroup\ --nocolor
- command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-nnoremap \ :Ag<space>
+if executable('ag')
+  let &grepprg = 'ag --nogroup --nocolor --column'
+else
+  let &grepprg = 'grep -rn $* *'
+endif
+command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 " ============================================================================
 " 缩进配置
 " Smart indent
@@ -1556,7 +1555,3 @@ nnoremap <right> dp
 "buffer
 " Remember info about open buffers on close
 set viminfo^=%
-map <PageUp> <Nop>
-map <PageDown> <Nop>
-noremap <PageUp> :bp<CR>
-noremap <PageDown> :bn<CR>
