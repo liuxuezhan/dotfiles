@@ -268,6 +268,7 @@ endfunc
 set number
 set cursorline
 nnoremap <F3> :set list! list?<CR> " F3 显示可打印字符开关
+set nolist
 nnoremap <F4> :set wrap! wrap?<CR> " F4 换行开关
 noremap <F6> :exec exists('syntax_on') ? 'syn off' : 'syn on'<CR> " F6 语法开关，关闭语法可以加快大文件的展示
 " F5 set paste问题已解决, 粘贴代码前不需要按F5了
