@@ -1339,7 +1339,7 @@ command! -bang -nargs=? -complete=dir Files
 nnoremap <silent> <expr> <Leader><leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 nnoremap <silent> <Leader>C        :Colors<CR>
 nnoremap <silent> <enter>  :Buffers<CR>
-nnoremap <silent> \       :Ag <C-R><C-W><CR>
+nnoremap \   :Ag <C-R><C-W><space>
 nnoremap <silent> <Leader>AG       :Ag <C-R><C-A><CR>
 xnoremap <silent> <Leader>ag       y:Ag <C-R>"<CR>
 nnoremap <silent> <Leader>`        :Marks<CR>
