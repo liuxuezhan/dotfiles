@@ -13,6 +13,7 @@ lnif() {
 
     echo "Step2: setting up symlinks"
     lnif $CURRENT_DIR/vimrc $HOME/.vimrc
+    lnif $CURRENT_DIR/tmux.conf $HOME/.tmux.conf
     lnif "$CURRENT_DIR/" "$HOME/.vim"
     lnif "$CURRENT_DIR/" "$HOME/.config/nvim"
     lnif $CURRENT_DIR/vimrc $CURRENT_DIR/init.vim
