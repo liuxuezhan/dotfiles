@@ -1511,6 +1511,8 @@ nnoremap ; :
 if v:version >= 703
   nnoremap <F9> :TagbarToggle<cr>
   let g:tagbar_sort = 0
+  let g:tagbar_width = 30 
+  let g:tagbar_autoclose = 1
 endif
 " ============================================================================
 " 搜索ag.vim
