@@ -1323,7 +1323,30 @@ endfunction
 autocmd vimrc FileType vim inoremap <buffer> <c-x><c-v> <c-r>=VimAwesomeComplete()<cr>
 
 
-" }}}
+
+" ============================================================================
+" NERD Tree
+nnoremap 1 :NERDTreeToggle<cr>
+let NERDTreeHighlightCursorline=1
+let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
+let g:NERDTreeMapOpenSplit = 's'
+let g:NERDTreeMapOpenVSplit = 'v'
+let NERDTreeShowBookmarks=1
+let NERDTreeShowHidden=1
+let NERDTreeWinPos = "right"
+let NERDTreeChDirMode = 2"改变跟目录
+let NERDTreeQuitOnOpen = 1"打开关闭
+nnoremap ; :
+
+" ============================================================================
+" tagbar 
+if v:version >= 703
+  nnoremap 2 :TagbarToggle<cr>
+  let g:tagbar_sort = 0
+  let g:tagbar_width = 30 
+  let g:tagbar_autoclose = 1
+endif
 " ============================================================================
 " FZF {{{
 " ============================================================================
@@ -1492,29 +1515,6 @@ let g:airline_powerline_fonts = 1
 " 闭状态显示空白符号计数
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#whitespace#symbol = '!'
-" ============================================================================
-" NERD Tree
-nnoremap <F8> :NERDTreeToggle<cr>
-let NERDTreeHighlightCursorline=1
-let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
-let g:NERDTreeMapOpenSplit = 's'
-let g:NERDTreeMapOpenVSplit = 'v'
-let NERDTreeShowBookmarks=1
-let NERDTreeShowHidden=1
-let NERDTreeWinPos = "right"
-let NERDTreeChDirMode = 2"改变跟目录
-let NERDTreeQuitOnOpen = 1"打开关闭
-nnoremap ; :
-
-" ============================================================================
-" tagbar 
-if v:version >= 703
-  nnoremap <F9> :TagbarToggle<cr>
-  let g:tagbar_sort = 0
-  let g:tagbar_width = 30 
-  let g:tagbar_autoclose = 1
-endif
 " ============================================================================
 " 搜索ag.vim
 if executable('ag')
