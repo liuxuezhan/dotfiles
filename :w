@@ -152,6 +152,7 @@ set autoread
 set clipboard=unnamed
 set grepformat=%f:%l:%c:%m,%f:%l:%m
 set completeopt=menuone,preview
+set nocursorline
 set nrformats=hex
 silent! set cryptmethod=blowfish2
 
@@ -212,7 +213,6 @@ set mouse=a
 " 80 chars/line
 set textwidth=0
 
-set cursorline
 set cursorcolumn
 if exists('&colorcolumn')
   set colorcolumn=80
@@ -268,6 +268,7 @@ function! HideNumber() " 为方便复制，用<F2>开启/关闭行号显示:
   set number?
 endfunc
 set number
+set cursorline
 nnoremap <F3> :set list! list?<CR> " F3 显示可打印字符开关
 set nolist
 nnoremap <F4> :set wrap! wrap?<CR> " F4 换行开关
