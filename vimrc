@@ -1326,7 +1326,7 @@ autocmd vimrc FileType vim inoremap <buffer> <c-x><c-v> <c-r>=VimAwesomeComplete
 
 " ============================================================================
 " NERD Tree
-nnoremap 1 :NERDTreeToggle<cr>
+nnoremap <leader>j :NERDTreeToggle<cr>
 let NERDTreeHighlightCursorline=1
 let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
@@ -1342,7 +1342,7 @@ nnoremap ; :
 " ============================================================================
 " tagbar 
 if v:version >= 703
-  nnoremap 2 :TagbarToggle<cr>
+  nnoremap ` :TagbarToggle<cr>
   let g:tagbar_sort = 0
   let g:tagbar_width = 30 
   let g:tagbar_autoclose = 1
