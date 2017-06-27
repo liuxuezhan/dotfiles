@@ -14,7 +14,7 @@ let mapleader      = ' '
 let maplocalleader = ' '
 
 augroup vimrc
-  autocmd!
+    autocmd!
 augroup END
 
 set nu
@@ -53,12 +53,12 @@ silent! set cryptmethod=blowfish2
 
 set formatoptions+=1
 if has('patch-7.3.541')
-  set formatoptions+=j
+    set formatoptions+=j
 endif
 if has('patch-7.4.338')
-  let &showbreak = '↳ '
-  set breakindent
-  set breakindentopt=sbr
+    let &showbreak = '↳ '
+    set breakindent
+    set breakindentopt=sbr
 endif
 
 " %< Where to truncate
@@ -91,7 +91,7 @@ set wildignore=*.swp,*.bak,*.pyc,*.class,.svn
 
 set directory=/tmp//,.
 if v:version >= 703
-  set undodir=/tmp//,.
+    set undodir=/tmp//,.
 endif
 
 " Shift-tab on GNU screen
@@ -111,7 +111,7 @@ set textwidth=0
 set cursorline
 set cursorcolumn
 if exists('&colorcolumn')
-  set colorcolumn=80
+    set colorcolumn=80
 endif
 
 " Keep the cursor on the same column
@@ -121,18 +121,17 @@ set nostartofline
 set isfname-==
 
 if exists('&fixeol')
-  set nofixeol
+    set nofixeol
 endif
 
 " ============================================================================
 " MAPPINGS {{{
 " ============================================================================
 "
-nnoremap ggg ggVG 
 " Disable CTRL-A on tmux or on screen
 if $TERM =~ 'screen'
-  nnoremap <C-a> <nop>
-  nnoremap <Leader><C-a> <C-a>
+    nnoremap <C-a> <nop>
+    nnoremap <Leader><C-a> <C-a>
 endif
 
 " Quit
@@ -152,12 +151,12 @@ noremap <F1> <Esc>"
 
 nnoremap <F2> :call HideNumber()<CR> 
 function! HideNumber() " 为方便复制，用<F2>开启/关闭行号显示:
-  if(&number)
-    set number!
-  else
-    set nonumber!
-  endif
-  set number?
+    if(&number)
+        set number!
+    else
+        set nonumber!
+    endif
+    set number?
 endfunc
 set number
 nnoremap <F3> :set list! list?<CR> " F3 显示可打印字符开关
@@ -185,12 +184,12 @@ nnoremap Y y$
 
 " Zoom
 function! s:zoom()
-  if winnr('$') > 1
-    tab split
-  elseif len(filter(map(range(tabpagenr('$')), 'tabpagebuflist(v:val + 1)'),
-                  \ 'index(v:val, '.bufnr('').') >= 0')) > 1
-    tabclose
-  endif
+    if winnr('$') > 1
+        tab split
+    elseif len(filter(map(range(tabpagenr('$')), 'tabpagebuflist(v:val + 1)'),
+                \ 'index(v:val, '.bufnr('').') >= 0')) > 1
+        tabclose
+    endif
 endfunction
 nnoremap <silent> <leader>z :call <sid>zoom()<cr>
 
@@ -207,9 +206,9 @@ let s:darwin = has('mac')
 silent! if plug#begin('~/.vim/plugged')
 
 if s:darwin
-  let g:plug_url_format = 'git@github.com:%s.git'
+    let g:plug_url_format = 'git@github.com:%s.git'
 else
-  let $GIT_SSL_NO_VERIFY = 'true'
+    let $GIT_SSL_NO_VERIFY = 'true'
 endif
 Plug 'terryma/vim-expand-region' "多选中
 " airline
@@ -225,10 +224,10 @@ Plug 'junegunn/fzf',        { 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
 if v:version >= 703
-  Plug 'junegunn/vim-after-object'
+    Plug 'junegunn/vim-after-object'
 endif
 if s:darwin
-  Plug 'junegunn/vim-xmark'
+    Plug 'junegunn/vim-xmark'
 endif
 unlet! g:plug_url_format
 
@@ -256,17 +255,17 @@ autocmd! User indentLine doautocmd indentLine Syntax
 
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 augroup nerd_loader
-  autocmd!
-  autocmd VimEnter * silent! autocmd! FileExplorer
-  autocmd BufEnter,BufNew *
-        \  if isdirectory(expand('<amatch>'))
-        \|   call plug#load('nerdtree')
-        \|   execute 'autocmd! nerd_loader'
-        \| endif
+    autocmd!
+    autocmd VimEnter * silent! autocmd! FileExplorer
+    autocmd BufEnter,BufNew *
+                \  if isdirectory(expand('<amatch>'))
+                \|   call plug#load('nerdtree')
+                \|   execute 'autocmd! nerd_loader'
+                \| endif
 augroup END
 
 if v:version >= 703
-  Plug 'majutsushi/tagbar'
+    Plug 'majutsushi/tagbar'
 endif
 Plug 'justinmk/vim-gtfo'
 
@@ -274,7 +273,7 @@ Plug 'justinmk/vim-gtfo'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 if v:version >= 703
-  Plug 'mhinz/vim-signify'
+    Plug 'mhinz/vim-signify'
 endif
 
 " Lang
@@ -310,10 +309,10 @@ vmap V <Plug>(expand_region_shrink)
 " nvim
 " ----------------------------------------------------------------------------
 if has('nvim')
-  tnoremap <a-a> <esc>a
-  tnoremap <a-b> <esc>b
-  tnoremap <a-d> <esc>d
-  tnoremap <a-f> <esc>f
+    tnoremap <a-a> <esc>a
+    tnoremap <a-b> <esc>b
+    tnoremap <a-d> <esc>d
+    tnoremap <a-f> <esc>f
 endif
 
 " ----------------------------------------------------------------------------
@@ -340,77 +339,77 @@ nnoremap <S-tab> <c-w>W
 " <tab> / <s-tab> / <c-v><tab> | super-duper-tab
 " ----------------------------------------------------------------------------
 function! s:can_complete(func, prefix)
-  if empty(a:func)
+    if empty(a:func)
+        return 0
+    endif
+    let start = call(a:func, [1, ''])
+    if start < 0
+        return 0
+    endif
+
+    let oline  = getline('.')
+    let line   = oline[0:start-1] . oline[col('.')-1:]
+
+    let opos   = getpos('.')
+    let pos    = copy(opos)
+    let pos[2] = start + 1
+
+    call setline('.', line)
+    call setpos('.', pos)
+    let result = call(a:func, [0, matchstr(a:prefix, '\k\+$')])
+    call setline('.', oline)
+    call setpos('.', opos)
+
+    if !empty(type(result) == type([]) ? result : result.words)
+        call complete(start + 1, result)
+        return 1
+    endif
     return 0
-  endif
-  let start = call(a:func, [1, ''])
-  if start < 0
-    return 0
-  endif
-
-  let oline  = getline('.')
-  let line   = oline[0:start-1] . oline[col('.')-1:]
-
-  let opos   = getpos('.')
-  let pos    = copy(opos)
-  let pos[2] = start + 1
-
-  call setline('.', line)
-  call setpos('.', pos)
-  let result = call(a:func, [0, matchstr(a:prefix, '\k\+$')])
-  call setline('.', oline)
-  call setpos('.', opos)
-
-  if !empty(type(result) == type([]) ? result : result.words)
-    call complete(start + 1, result)
-    return 1
-  endif
-  return 0
 endfunction
 
 function! s:feedkeys(k)
-  call feedkeys(a:k, 'n')
-  return ''
+    call feedkeys(a:k, 'n')
+    return ''
 endfunction
 
 function! s:super_duper_tab(pumvisible, next)
-  let [k, o] = a:next ? ["\<c-n>", "\<tab>"] : ["\<c-p>", "\<s-tab>"]
-  if a:pumvisible
+    let [k, o] = a:next ? ["\<c-n>", "\<tab>"] : ["\<c-p>", "\<s-tab>"]
+    if a:pumvisible
+        return s:feedkeys(k)
+    endif
+
+    let line = getline('.')
+    let col = col('.') - 2
+    if line[col] !~ '\k\|[/~.]'
+        return s:feedkeys(o)
+    endif
+
+    let prefix = expand(matchstr(line[0:col], '\S*$'))
+    if prefix =~ '^[~/.]'
+        return s:feedkeys("\<c-x>\<c-f>")
+    endif
+    if s:can_complete(&omnifunc, prefix) || s:can_complete(&completefunc, prefix)
+        return ''
+    endif
     return s:feedkeys(k)
-  endif
-
-  let line = getline('.')
-  let col = col('.') - 2
-  if line[col] !~ '\k\|[/~.]'
-    return s:feedkeys(o)
-  endif
-
-  let prefix = expand(matchstr(line[0:col], '\S*$'))
-  if prefix =~ '^[~/.]'
-    return s:feedkeys("\<c-x>\<c-f>")
-  endif
-  if s:can_complete(&omnifunc, prefix) || s:can_complete(&completefunc, prefix)
-    return ''
-  endif
-  return s:feedkeys(k)
 endfunction
 
 if has_key(g:plugs, 'ultisnips')
-  " UltiSnips will be loaded only when tab is first pressed in insert mode
-  if !exists(':UltiSnipsEdit')
-    inoremap <silent> <Plug>(tab) <g-r>=plug#load('ultisnips')?UltiSnips#ExpandSnippet():''<cr>
-    imap <tab> <Plug>(tab)
-  endif
+    " UltiSnips will be loaded only when tab is first pressed in insert mode
+    if !exists(':UltiSnipsEdit')
+        inoremap <silent> <Plug>(tab) <g-r>=plug#load('ultisnips')?UltiSnips#ExpandSnippet():''<cr>
+        imap <tab> <Plug>(tab)
+    endif
 
-  let g:SuperTabMappingForward  = "<tab>"
-  let g:SuperTabMappingBackward = "<s-tab>"
-  function! SuperTab(m)
-    return s:super_duper_tab(a:m == 'n' ? "\<c-n>" : "\<c-p>",
-                           \ a:m == 'n' ? "\<tab>" : "\<s-tab>")
-  endfunction
+    let g:SuperTabMappingForward  = "<tab>"
+    let g:SuperTabMappingBackward = "<s-tab>"
+    function! SuperTab(m)
+        return s:super_duper_tab(a:m == 'n' ? "\<c-n>" : "\<c-p>",
+                    \ a:m == 'n' ? "\<tab>" : "\<s-tab>")
+    endfunction
 else
-  inoremap <silent> <tab>   <c-r>=<SID>super_duper_tab(pumvisible(), 1)<cr>
-  inoremap <silent> <s-tab> <c-r>=<SID>super_duper_tab(pumvisible(), 0)<cr>
+    inoremap <silent> <tab>   <c-r>=<SID>super_duper_tab(pumvisible(), 1)<cr>
+    inoremap <silent> <s-tab> <c-r>=<SID>super_duper_tab(pumvisible(), 0)<cr>
 endif
 
 " ----------------------------------------------------------------------------
@@ -457,22 +456,22 @@ silent! exe "set <S-Right>=\<Esc>f"
 " #gi / #gpi | go to next/previous indentation level
 " ----------------------------------------------------------------------------
 function! s:go_indent(times, dir)
-  for _ in range(a:times)
-    let l = line('.')
-    let x = line('$')
-    let i = s:indent_len(getline(l))
-    let e = empty(getline(l))
+    for _ in range(a:times)
+        let l = line('.')
+        let x = line('$')
+        let i = s:indent_len(getline(l))
+        let e = empty(getline(l))
 
-    while l >= 1 && l <= x
-      let line = getline(l + a:dir)
-      let l += a:dir
-      if s:indent_len(line) != i || empty(line) != e
-        break
-      endif
-    endwhile
-    let l = min([max([1, l]), x])
-    execute 'normal! '. l .'G^'
-  endfor
+        while l >= 1 && l <= x
+            let line = getline(l + a:dir)
+            let l += a:dir
+            if s:indent_len(line) != i || empty(line) != e
+                break
+            endif
+        endwhile
+        let l = min([max([1, l]), x])
+        execute 'normal! '. l .'G^'
+    endfor
 endfunction
 nnoremap <silent> gi :<c-u>call <SID>go_indent(v:count1, 1)<cr>
 nnoremap <silent> gpi :<c-u>call <SID>go_indent(v:count1, -1)<cr>
@@ -491,8 +490,8 @@ inoreabbrev <expr> #!! "#!/usr/bin/env" . (empty(&filetype) ? '' : ' '.&filetype
 " <leader>ij | Open in IntelliJ
 " ----------------------------------------------------------------------------
 if s:darwin
-  nnoremap <silent> <leader>ij
-  \ :call system('"/Applications/IntelliJ IDEA.app/Contents/MacOS/idea" '.expand('%:p'))<cr>
+    nnoremap <silent> <leader>ij
+                \ :call system('"/Applications/IntelliJ IDEA.app/Contents/MacOS/idea" '.expand('%:p'))<cr>
 endif
 
 " }}}
@@ -514,54 +513,54 @@ command! -nargs=1 Count execute printf('%%s/%s//gn', escape(<q-args>, '/')) | no
 " :CopyRTF
 " ----------------------------------------------------------------------------
 function! s:colors(...)
-  return filter(map(filter(split(globpath(&rtp, 'colors/*.vim'), "\n"),
-        \                  'v:val !~ "^/usr/"'),
-        \           'fnamemodify(v:val, ":t:r")'),
-        \       '!a:0 || stridx(v:val, a:1) >= 0')
+    return filter(map(filter(split(globpath(&rtp, 'colors/*.vim'), "\n"),
+                \                  'v:val !~ "^/usr/"'),
+                \           'fnamemodify(v:val, ":t:r")'),
+                \       '!a:0 || stridx(v:val, a:1) >= 0')
 endfunction
 
 function! s:copy_rtf(line1, line2, ...)
-  let [ft, cs, nu] = [&filetype, g:colors_name, &l:nu]
-  let lines = getline(1, '$')
+    let [ft, cs, nu] = [&filetype, g:colors_name, &l:nu]
+    let lines = getline(1, '$')
 
-  tab new
-  setlocal buftype=nofile bufhidden=wipe nonumber
-  let &filetype = ft
-  call setline(1, lines)
+    tab new
+    setlocal buftype=nofile bufhidden=wipe nonumber
+    let &filetype = ft
+    call setline(1, lines)
 
-  execute 'colo' get(a:000, 0, 'seoul256-light')
-  hi Normal ctermbg=NONE guibg=NONE
+    execute 'colo' get(a:000, 0, 'seoul256-light')
+    hi Normal ctermbg=NONE guibg=NONE
 
-  let lines = getline(a:line1, a:line2)
-  let indent = repeat(' ', min(map(filter(copy(lines), '!empty(v:val)'), 'len(matchstr(v:val, "^ *"))')))
-  call setline(a:line1, map(lines, 'substitute(v:val, indent, "", "")'))
+    let lines = getline(a:line1, a:line2)
+    let indent = repeat(' ', min(map(filter(copy(lines), '!empty(v:val)'), 'len(matchstr(v:val, "^ *"))')))
+    call setline(a:line1, map(lines, 'substitute(v:val, indent, "", "")'))
 
-  call tohtml#Convert2HTML(a:line1, a:line2)
-  g/^\(pre\|body\) {/s/background-color: #[0-9]*; //
-  silent %write !textutil -convert rtf -textsizemultiplier 1.3 -stdin -stdout | pbcopy
+    call tohtml#Convert2HTML(a:line1, a:line2)
+    g/^\(pre\|body\) {/s/background-color: #[0-9]*; //
+    silent %write !textutil -convert rtf -textsizemultiplier 1.3 -stdin -stdout | pbcopy
 
-  bd!
-  tabclose
+    bd!
+    tabclose
 
-  let &l:nu = nu
-  execute 'colorscheme' cs
+    let &l:nu = nu
+    execute 'colorscheme' cs
 endfunction
 
 if s:darwin
-  command! -range=% -nargs=? -complete=customlist,s:colors CopyRTF call s:copy_rtf(<line1>, <line2>, <f-args>)
+    command! -range=% -nargs=? -complete=customlist,s:colors CopyRTF call s:copy_rtf(<line1>, <line2>, <f-args>)
 endif
 
 " ----------------------------------------------------------------------------
 " :Root | Change directory to the root of the Git repository
 " ----------------------------------------------------------------------------
 function! s:root()
-  let root = systemlist('git rev-parse --show-toplevel')[0]
-  if v:shell_error
-    echo 'Not in git repo'
-  else
-    execute 'lcd' root
-    echo 'Changed directory to: '.root
-  endif
+    let root = systemlist('git rev-parse --show-toplevel')[0]
+    if v:shell_error
+        echo 'Not in git repo'
+    else
+        execute 'lcd' root
+        echo 'Changed directory to: '.root
+    endif
 endfunction
 command! Root call s:root()
 
@@ -570,11 +569,11 @@ command! Root call s:root()
 " :Shuffle | Shuffle selected lines
 " ----------------------------------------------------------------------------
 function! s:shuffle() range
-ruby << RB
-  first, last = %w[a:firstline a:lastline].map { |e| VIM::evaluate(e).to_i }
-  (first..last).map { |l| $curbuf[l] }.shuffle.each_with_index do |line, i|
+    ruby << RB
+    first, last = %w[a:firstline a:lastline].map { |e| VIM::evaluate(e).to_i }
+    (first..last).map { |l| $curbuf[l] }.shuffle.each_with_index do |line, i|
     $curbuf[first + i] = line
-  end
+end
 RB
 endfunction
 command! -range Shuffle <line1>,<line2>call s:shuffle()
@@ -583,75 +582,75 @@ command! -range Shuffle <line1>,<line2>call s:shuffle()
 " Syntax highlighting in code snippets
 " ----------------------------------------------------------------------------
 function! s:syntax_include(lang, b, e, inclusive)
-  let syns = split(globpath(&rtp, "syntax/".a:lang.".vim"), "\n")
-  if empty(syns)
-    return
-  endif
-
-  if exists('b:current_syntax')
-    let csyn = b:current_syntax
-    unlet b:current_syntax
-  endif
-
-  let z = "'" " Default
-  for nr in range(char2nr('a'), char2nr('z'))
-    let char = nr2char(nr)
-    if a:b !~ char && a:e !~ char
-      let z = char
-      break
+    let syns = split(globpath(&rtp, "syntax/".a:lang.".vim"), "\n")
+    if empty(syns)
+        return
     endif
-  endfor
 
-  silent! exec printf("syntax include @%s %s", a:lang, syns[0])
-  if a:inclusive
-    exec printf('syntax region %sSnip start=%s\(%s\)\@=%s ' .
-                \ 'end=%s\(%s\)\@<=\(\)%s contains=@%s containedin=ALL',
-                \ a:lang, z, a:b, z, z, a:e, z, a:lang)
-  else
-    exec printf('syntax region %sSnip matchgroup=Snip start=%s%s%s ' .
-                \ 'end=%s%s%s contains=@%s containedin=ALL',
-                \ a:lang, z, a:b, z, z, a:e, z, a:lang)
-  endif
+    if exists('b:current_syntax')
+        let csyn = b:current_syntax
+        unlet b:current_syntax
+    endif
 
-  if exists('csyn')
-    let b:current_syntax = csyn
-  endif
+    let z = "'" " Default
+    for nr in range(char2nr('a'), char2nr('z'))
+        let char = nr2char(nr)
+        if a:b !~ char && a:e !~ char
+            let z = char
+            break
+        endif
+    endfor
+
+    silent! exec printf("syntax include @%s %s", a:lang, syns[0])
+    if a:inclusive
+        exec printf('syntax region %sSnip start=%s\(%s\)\@=%s ' .
+                    \ 'end=%s\(%s\)\@<=\(\)%s contains=@%s containedin=ALL',
+                    \ a:lang, z, a:b, z, z, a:e, z, a:lang)
+    else
+        exec printf('syntax region %sSnip matchgroup=Snip start=%s%s%s ' .
+                    \ 'end=%s%s%s contains=@%s containedin=ALL',
+                    \ a:lang, z, a:b, z, z, a:e, z, a:lang)
+    endif
+
+    if exists('csyn')
+        let b:current_syntax = csyn
+    endif
 endfunction
 
 function! s:file_type_handler()
-  if &ft =~ 'jinja' && &ft != 'jinja'
-    call s:syntax_include('jinja', '{{', '}}', 1)
-    call s:syntax_include('jinja', '{%', '%}', 1)
-  elseif &ft =~ 'mkd\|markdown'
-    for lang in ['ruby', 'yaml', 'vim', 'sh', 'bash:sh', 'python', 'java', 'c',
-          \ 'clojure', 'clj:clojure', 'scala', 'sql', 'gnuplot']
-      call s:syntax_include(split(lang, ':')[-1], '```'.split(lang, ':')[0], '```', 0)
-    endfor
+    if &ft =~ 'jinja' && &ft != 'jinja'
+        call s:syntax_include('jinja', '{{', '}}', 1)
+        call s:syntax_include('jinja', '{%', '%}', 1)
+    elseif &ft =~ 'mkd\|markdown'
+        for lang in ['ruby', 'yaml', 'vim', 'sh', 'bash:sh', 'python', 'java', 'c',
+                    \ 'clojure', 'clj:clojure', 'scala', 'sql', 'gnuplot']
+            call s:syntax_include(split(lang, ':')[-1], '```'.split(lang, ':')[0], '```', 0)
+        endfor
 
-    highlight def link Snip Folded
-    setlocal textwidth=78
-    setlocal completefunc=emoji#complete
-  elseif &ft == 'sh'
-    call s:syntax_include('ruby', '#!ruby', '/\%$', 1)
-  endif
+        highlight def link Snip Folded
+        setlocal textwidth=78
+        setlocal completefunc=emoji#complete
+    elseif &ft == 'sh'
+        call s:syntax_include('ruby', '#!ruby', '/\%$', 1)
+    endif
 endfunction
 
 " ----------------------------------------------------------------------------
 " SaveMacro / LoadMacro
 " ----------------------------------------------------------------------------
 function! s:save_macro(name, file)
-  let content = eval('@'.a:name)
-  if !empty(content)
-    call writefile(split(content, "\n"), a:file)
-    echom len(content) . " bytes save to ". a:file
-  endif
+    let content = eval('@'.a:name)
+    if !empty(content)
+        call writefile(split(content, "\n"), a:file)
+        echom len(content) . " bytes save to ". a:file
+    endif
 endfunction
 command! -nargs=* SaveMacro call <SID>save_macro(<f-args>)
 
 function! s:load_macro(file, name)
-  let data = join(readfile(a:file), "\n")
-  call setreg(a:name, data, 'c')
-  echom "Macro loaded to @". a:name
+    let data = join(readfile(a:file), "\n")
+    call setreg(a:name, data, 'c')
+    echom "Macro loaded to @". a:name
 endfunction
 command! -nargs=* LoadMacro call <SID>load_macro(<f-args>)
 
@@ -659,8 +658,8 @@ command! -nargs=* LoadMacro call <SID>load_macro(<f-args>)
 " HL | Find out syntax group
 " ----------------------------------------------------------------------------
 function! s:hl()
-  " echo synIDattr(synID(line('.'), col('.'), 0), 'name')
-  echo join(map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")'), '/')
+    " echo synIDattr(synID(line('.'), col('.'), 0), 'name')
+    echo join(map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")'), '/')
 endfunction
 command! HL call <SID>hl()
 
@@ -668,24 +667,24 @@ command! HL call <SID>hl()
 " :A
 " ----------------------------------------------------------------------------
 function! s:a(cmd)
-  let name = expand('%:r')
-  let ext = tolower(expand('%:e'))
-  let sources = ['c', 'cc', 'cpp', 'cxx']
-  let headers = ['h', 'hh', 'hpp', 'hxx']
-  for pair in [[sources, headers], [headers, sources]]
-    let [set1, set2] = pair
-    if index(set1, ext) >= 0
-      for h in set2
-        let aname = name.'.'.h
-        for a in [aname, toupper(aname)]
-          if filereadable(a)
-            execute a:cmd a
-            return
-          end
-        endfor
-      endfor
-    endif
-  endfor
+    let name = expand('%:r')
+    let ext = tolower(expand('%:e'))
+    let sources = ['c', 'cc', 'cpp', 'cxx']
+    let headers = ['h', 'hh', 'hpp', 'hxx']
+    for pair in [[sources, headers], [headers, sources]]
+        let [set1, set2] = pair
+        if index(set1, ext) >= 0
+            for h in set2
+                let aname = name.'.'.h
+                for a in [aname, toupper(aname)]
+                    if filereadable(a)
+                        execute a:cmd a
+                        return
+                    end
+                endfor
+            endfor
+        endif
+    endfor
 endfunction
 command! A call s:a('e')
 command! AV call s:a('botright vertical split')
@@ -694,22 +693,22 @@ command! AV call s:a('botright vertical split')
 " Todo
 " ----------------------------------------------------------------------------
 function! s:todo() abort
-  let entries = []
-  for cmd in ['git grep -niI -e TODO -e FIXME -e XXX 2> /dev/null',
-            \ 'grep -rniI -e TODO -e FIXME -e XXX * 2> /dev/null']
-    let lines = split(system(cmd), '\n')
-    if v:shell_error != 0 | continue | endif
-    for line in lines
-      let [fname, lno, text] = matchlist(line, '^\([^:]*\):\([^:]*\):\(.*\)')[1:3]
-      call add(entries, { 'filename': fname, 'lnum': lno, 'text': text })
+    let entries = []
+    for cmd in ['git grep -niI -e TODO -e FIXME -e XXX 2> /dev/null',
+                \ 'grep -rniI -e TODO -e FIXME -e XXX * 2> /dev/null']
+        let lines = split(system(cmd), '\n')
+        if v:shell_error != 0 | continue | endif
+        for line in lines
+            let [fname, lno, text] = matchlist(line, '^\([^:]*\):\([^:]*\):\(.*\)')[1:3]
+            call add(entries, { 'filename': fname, 'lnum': lno, 'text': text })
+        endfor
+        break
     endfor
-    break
-  endfor
 
-  if !empty(entries)
-    call setqflist(entries)
-    copen
-  endif
+    if !empty(entries)
+        call setqflist(entries)
+        copen
+    endif
 endfunction
 command! Todo call s:todo()
 
@@ -717,34 +716,34 @@ command! Todo call s:todo()
 " ConnectChrome
 " ----------------------------------------------------------------------------
 if s:darwin
-  function! s:connect_chrome(bang)
-    augroup connect-chrome
-      autocmd!
-      if !a:bang
-        autocmd BufWritePost <buffer> call system(join([
-        \ "osascript -e 'tell application \"Google Chrome\"".
-        \               "to tell the active tab of its first window\n",
-        \ "  reload",
-        \ "end tell'"], "\n"))
-      endif
-    augroup END
-  endfunction
-  command! -bang ConnectChrome call s:connect_chrome(<bang>0)
+    function! s:connect_chrome(bang)
+        augroup connect-chrome
+            autocmd!
+            if !a:bang
+                autocmd BufWritePost <buffer> call system(join([
+                            \ "osascript -e 'tell application \"Google Chrome\"".
+                            \               "to tell the active tab of its first window\n",
+                            \ "  reload",
+                            \ "end tell'"], "\n"))
+            endif
+        augroup END
+    endfunction
+    command! -bang ConnectChrome call s:connect_chrome(<bang>0)
 endif
 
 " ----------------------------------------------------------------------------
 " AutoSave
 " ----------------------------------------------------------------------------
 function! s:autosave(enable)
-  augroup autosave
-    autocmd!
-    if a:enable
-      autocmd TextChanged,InsertLeave <buffer>
-            \  if empty(&buftype) && !empty(bufname(''))
-            \|   silent! update
-            \| endif
-    endif
-  augroup END
+    augroup autosave
+        autocmd!
+        if a:enable
+            autocmd TextChanged,InsertLeave <buffer>
+                        \  if empty(&buftype) && !empty(bufname(''))
+                        \|   silent! update
+                        \| endif
+        endif
+    augroup END
 endfunction
 
 command! -bang AutoSave call s:autosave(<bang>1)
@@ -753,34 +752,34 @@ command! -bang AutoSave call s:autosave(<bang>1)
 " TX
 " ----------------------------------------------------------------------------
 command! -nargs=1 TX
-  \ call system('tmux split-window -d -l 16 '.<q-args>)
+            \ call system('tmux split-window -d -l 16 '.<q-args>)
 cnoremap !! TX<space>
 
 " ----------------------------------------------------------------------------
 " EX | chmod +x
 " ----------------------------------------------------------------------------
 command! EX if !empty(expand('%'))
-         \|   write
-         \|   call system('chmod +x '.expand('%'))
-         \|   silent e
-         \| else
-         \|   echohl WarningMsg
-         \|   echo 'Save the file first'
-         \|   echohl None
-         \| endif
+            \|   write
+            \|   call system('chmod +x '.expand('%'))
+            \|   silent e
+            \| else
+                \|   echohl WarningMsg
+                \|   echo 'Save the file first'
+                \|   echohl None
+                \| endif
 
 " ----------------------------------------------------------------------------
 " Profile
 " ----------------------------------------------------------------------------
 function! s:profile(bang)
-  if a:bang
-    profile pause
-    noautocmd qall
-  else
-    profile start /tmp/profile.log
-    profile func *
-    profile file *
-  endif
+    if a:bang
+        profile pause
+        noautocmd qall
+    else
+        profile start /tmp/profile.log
+        profile func *
+        profile file *
+    endif
 endfunction
 command! -bang Profile call s:profile(<bang>0)
 
@@ -788,24 +787,24 @@ command! -bang Profile call s:profile(<bang>0)
 " call LSD()
 " ----------------------------------------------------------------------------
 function! LSD()
-  syntax clear
+    syntax clear
 
-  for i in range(16, 255)
-    execute printf('highlight LSD%s ctermfg=%s', i - 16, i)
-  endfor
+    for i in range(16, 255)
+        execute printf('highlight LSD%s ctermfg=%s', i - 16, i)
+    endfor
 
-  let block = 4
-  for l in range(1, line('$'))
-    let c = 1
-    let max = len(getline(l))
-    while c < max
-      let stride = 4 + reltime()[1] % 8
-      execute printf('syntax region lsd%s_%s start=/\%%%sl\%%%sc/ end=/\%%%sl\%%%sc/ contains=ALL', l, c, l, c, l, min([c + stride, max]))
-      let rand = abs(reltime()[1] % (256 - 16))
-      execute printf('hi def link lsd%s_%s LSD%s', l, c, rand)
-      let c += stride
-    endwhile
-  endfor
+    let block = 4
+    for l in range(1, line('$'))
+        let c = 1
+        let max = len(getline(l))
+        while c < max
+            let stride = 4 + reltime()[1] % 8
+            execute printf('syntax region lsd%s_%s start=/\%%%sl\%%%sc/ end=/\%%%sl\%%%sc/ contains=ALL', l, c, l, c, l, min([c + stride, max]))
+            let rand = abs(reltime()[1] % (256 - 16))
+            execute printf('hi def link lsd%s_%s LSD%s', l, c, rand)
+            let c += stride
+        endwhile
+    endfor
 endfunction
 
 
@@ -813,18 +812,18 @@ endfunction
 " Open FILENAME:LINE:COL
 " ----------------------------------------------------------------------------
 function! s:goto_line()
-  let tokens = split(expand('%'), ':')
-  if len(tokens) <= 1 || !filereadable(tokens[0])
-    return
-  endif
+    let tokens = split(expand('%'), ':')
+    if len(tokens) <= 1 || !filereadable(tokens[0])
+        return
+    endif
 
-  let file = tokens[0]
-  let rest = map(tokens[1:], 'str2nr(v:val)')
-  let line = get(rest, 0, 1)
-  let col  = get(rest, 1, 1)
-  bd!
-  silent execute 'e' file
-  execute printf('normal! %dG%d|', line, col)
+    let file = tokens[0]
+    let rest = map(tokens[1:], 'str2nr(v:val)')
+    let line = get(rest, 0, 1)
+    let col  = get(rest, 1, 1)
+    bd!
+    silent execute 'e' file
+    execute printf('normal! %dG%d|', line, col)
 endfunction
 
 autocmd vimrc BufNewFile * nested call s:goto_line()
@@ -834,9 +833,9 @@ autocmd vimrc BufNewFile * nested call s:goto_line()
 " co? : Toggle options (inspired by unimpaired.vim)
 " ----------------------------------------------------------------------------
 function! s:map_change_option(...)
-  let [key, opt] = a:000[0:1]
-  let op = get(a:, 3, 'set '.opt.'!')
-  execute printf("nnoremap co%s :%s<bar>set %s?<cr>", key, op, opt)
+    let [key, opt] = a:000[0:1]
+    let op = get(a:, 3, 'set '.opt.'!')
+    execute printf("nnoremap co%s :%s<bar>set %s?<cr>", key, op, opt)
 endfunction
 
 call s:map_change_option('p', 'paste')
@@ -845,19 +844,19 @@ call s:map_change_option('w', 'wrap')
 call s:map_change_option('h', 'hlsearch')
 call s:map_change_option('m', 'mouse', 'let &mouse = &mouse == "" ? "a" : ""')
 call s:map_change_option('t', 'textwidth',
-    \ 'let &textwidth = input("textwidth (". &textwidth ."): ")<bar>redraw')
+            \ 'let &textwidth = input("textwidth (". &textwidth ."): ")<bar>redraw')
 call s:map_change_option('b', 'background',
-    \ 'let &background = &background == "dark" ? "light" : "dark"<bar>redraw')
+            \ 'let &background = &background == "dark" ? "light" : "dark"<bar>redraw')
 
 " ----------------------------------------------------------------------------
 " <Leader>?/! | Google it / Feeling lucky
 " ----------------------------------------------------------------------------
 function! s:goog(pat, lucky)
-  let q = '"'.substitute(a:pat, '["\n]', ' ', 'g').'"'
-  let q = substitute(q, '[[:punct:] ]',
-       \ '\=printf("%%%02X", char2nr(submatch(0)))', 'g')
-  call system(printf('open "https://www.google.com/search?%sq=%s"',
-                   \ a:lucky ? 'btnI&' : '', q))
+    let q = '"'.substitute(a:pat, '["\n]', ' ', 'g').'"'
+    let q = substitute(q, '[[:punct:] ]',
+                \ '\=printf("%%%02X", char2nr(submatch(0)))', 'g')
+    call system(printf('open "https://www.google.com/search?%sq=%s"',
+                \ a:lucky ? 'btnI&' : '', q))
 endfunction
 
 nnoremap <leader>? :call <SID>goog(expand("<cWORD>"), 0)<cr>
@@ -875,13 +874,13 @@ xnoremap <leader>! "gy:call <SID>goog(@g, 1)<cr>gv
 " Common
 " ----------------------------------------------------------------------------
 function! s:textobj_cancel()
-  if v:operator == 'c'
-    augroup textobj_undo_empty_change
-      autocmd InsertLeave <buffer> execute 'normal! u'
-            \| execute 'autocmd! textobj_undo_empty_change'
-            \| execute 'augroup! textobj_undo_empty_change'
-    augroup END
-  endif
+    if v:operator == 'c'
+        augroup textobj_undo_empty_change
+            autocmd InsertLeave <buffer> execute 'normal! u'
+                        \| execute 'autocmd! textobj_undo_empty_change'
+                        \| execute 'augroup! textobj_undo_empty_change'
+        augroup END
+    endif
 endfunction
 
 noremap         <Plug>(TOC) <nop>
@@ -892,39 +891,39 @@ inoremap <expr> <Plug>(TOC) exists('#textobj_undo_empty_change')?"\<esc>":''
 " ?io       | strictly-indent-object
 " ----------------------------------------------------------------------------
 function! s:indent_len(str)
-  return type(a:str) == 1 ? len(matchstr(a:str, '^\s*')) : 0
+    return type(a:str) == 1 ? len(matchstr(a:str, '^\s*')) : 0
 endfunction
 
 function! s:indent_object(op, skip_blank, b, e, bd, ed)
-  let i = min([s:indent_len(getline(a:b)), s:indent_len(getline(a:e))])
-  let x = line('$')
-  let d = [a:b, a:e]
+    let i = min([s:indent_len(getline(a:b)), s:indent_len(getline(a:e))])
+    let x = line('$')
+    let d = [a:b, a:e]
 
-  if i == 0 && empty(getline(a:b)) && empty(getline(a:e))
-    let [b, e] = [a:b, a:e]
-    while b > 0 && e <= line('$')
-      let b -= 1
-      let e += 1
-      let i = min(filter(map([b, e], 's:indent_len(getline(v:val))'), 'v:val != 0'))
-      if i > 0
-        break
-      endif
-    endwhile
-  endif
+    if i == 0 && empty(getline(a:b)) && empty(getline(a:e))
+        let [b, e] = [a:b, a:e]
+        while b > 0 && e <= line('$')
+            let b -= 1
+            let e += 1
+            let i = min(filter(map([b, e], 's:indent_len(getline(v:val))'), 'v:val != 0'))
+            if i > 0
+                break
+            endif
+        endwhile
+    endif
 
-  for triple in [[0, 'd[o] > 1', -1], [1, 'd[o] < x', +1]]
-    let [o, ev, df] = triple
+    for triple in [[0, 'd[o] > 1', -1], [1, 'd[o] < x', +1]]
+        let [o, ev, df] = triple
 
-    while eval(ev)
-      let line = getline(d[o] + df)
-      let idt = s:indent_len(line)
+        while eval(ev)
+            let line = getline(d[o] + df)
+            let idt = s:indent_len(line)
 
-      if eval('idt '.a:op.' i') && (a:skip_blank || !empty(line)) || (a:skip_blank && empty(line))
-        let d[o] += df
-      else | break | end
-    endwhile
-  endfor
-  execute printf('normal! %dGV%dG', max([1, d[0] + a:bd]), min([x, d[1] + a:ed]))
+            if eval('idt '.a:op.' i') && (a:skip_blank || !empty(line)) || (a:skip_blank && empty(line))
+                let d[o] += df
+            else | break | end
+        endwhile
+    endfor
+    execute printf('normal! %dGV%dG', max([1, d[0] + a:bd]), min([x, d[1] + a:ed]))
 endfunction
 xnoremap <silent> ii :<c-u>call <SID>indent_object('>=', 1, line("'<"), line("'>"), 0, 0)<cr>
 onoremap <silent> ii :<c-u>call <SID>indent_object('>=', 1, line('.'), line('.'), 0, 0)<cr>
@@ -943,41 +942,41 @@ nmap <silent> <leader>A ^vio<C-V>$A
 " ?i_ ?a_ ?i. ?a. ?i, ?a, ?i/
 " ----------------------------------------------------------------------------
 function! s:between_the_chars(incll, inclr, char, vis)
-  let cursor = col('.')
-  let line   = getline('.')
-  let before = line[0 : cursor - 1]
-  let after  = line[cursor : -1]
-  let [b, e] = [cursor, cursor]
+    let cursor = col('.')
+    let line   = getline('.')
+    let before = line[0 : cursor - 1]
+    let after  = line[cursor : -1]
+    let [b, e] = [cursor, cursor]
 
-  try
-    let i = stridx(join(reverse(split(before, '\zs')), ''), a:char)
-    if i < 0 | throw 'exit' | end
-    let b = len(before) - i + (a:incll ? 0 : 1)
+    try
+        let i = stridx(join(reverse(split(before, '\zs')), ''), a:char)
+        if i < 0 | throw 'exit' | end
+        let b = len(before) - i + (a:incll ? 0 : 1)
 
-    let i = stridx(after, a:char)
-    if i < 0 | throw 'exit' | end
-    let e = cursor + i + 1 - (a:inclr ? 0 : 1)
+        let i = stridx(after, a:char)
+        if i < 0 | throw 'exit' | end
+        let e = cursor + i + 1 - (a:inclr ? 0 : 1)
 
-    execute printf("normal! 0%dlhv0%dlh", b, e)
-  catch 'exit'
-    call s:textobj_cancel()
-    if a:vis
-      normal! gv
-    endif
-  finally
-    " Cleanup command history
-    if histget(':', -1) =~ '<SNR>[0-9_]*between_the_chars('
-      call histdel(':', -1)
-    endif
-    echo
-  endtry
+        execute printf("normal! 0%dlhv0%dlh", b, e)
+    catch 'exit'
+        call s:textobj_cancel()
+        if a:vis
+            normal! gv
+        endif
+    finally
+        " Cleanup command history
+        if histget(':', -1) =~ '<SNR>[0-9_]*between_the_chars('
+            call histdel(':', -1)
+        endif
+        echo
+    endtry
 endfunction
 
 for [s:c, s:l] in items({'_': 0, '.': 0, ',': 0, '/': 1, '-': 0})
-  execute printf("xmap <silent> i%s :<C-U>call <SID>between_the_chars(0,  0, '%s', 1)<CR><Plug>(TOC)", s:c, s:c)
-  execute printf("omap <silent> i%s :<C-U>call <SID>between_the_chars(0,  0, '%s', 0)<CR><Plug>(TOC)", s:c, s:c)
-  execute printf("xmap <silent> a%s :<C-U>call <SID>between_the_chars(%s, 1, '%s', 1)<CR><Plug>(TOC)", s:c, s:l, s:c)
-  execute printf("omap <silent> a%s :<C-U>call <SID>between_the_chars(%s, 1, '%s', 0)<CR><Plug>(TOC)", s:c, s:l, s:c)
+    execute printf("xmap <silent> i%s :<C-U>call <SID>between_the_chars(0,  0, '%s', 1)<CR><Plug>(TOC)", s:c, s:c)
+    execute printf("omap <silent> i%s :<C-U>call <SID>between_the_chars(0,  0, '%s', 0)<CR><Plug>(TOC)", s:c, s:c)
+    execute printf("xmap <silent> a%s :<C-U>call <SID>between_the_chars(%s, 1, '%s', 1)<CR><Plug>(TOC)", s:c, s:l, s:c)
+    execute printf("omap <silent> a%s :<C-U>call <SID>between_the_chars(%s, 1, '%s', 0)<CR><Plug>(TOC)", s:c, s:l, s:c)
 endfor
 
 " ----------------------------------------------------------------------------
@@ -996,31 +995,31 @@ onoremap <silent> il :<C-U>normal! ^vg_<CR>
 " ?i# | inner comment
 " ----------------------------------------------------------------------------
 function! s:inner_comment(vis)
-  if synIDattr(synID(line('.'), col('.'), 0), 'name') !~? 'comment'
-    call s:textobj_cancel()
-    if a:vis
-      normal! gv
+    if synIDattr(synID(line('.'), col('.'), 0), 'name') !~? 'comment'
+        call s:textobj_cancel()
+        if a:vis
+            normal! gv
+        endif
+        return
     endif
-    return
-  endif
 
-  let origin = line('.')
-  let lines = []
-  for dir in [-1, 1]
-    let line = origin
-    let line += dir
-    while line >= 1 && line <= line('$')
-      execute 'normal!' line.'G^'
-      if synIDattr(synID(line('.'), col('.'), 0), 'name') !~? 'comment'
-        break
-      endif
-      let line += dir
-    endwhile
-    let line -= dir
-    call add(lines, line)
-  endfor
+    let origin = line('.')
+    let lines = []
+    for dir in [-1, 1]
+        let line = origin
+        let line += dir
+        while line >= 1 && line <= line('$')
+            execute 'normal!' line.'G^'
+            if synIDattr(synID(line('.'), col('.'), 0), 'name') !~? 'comment'
+                break
+            endif
+            let line += dir
+        endwhile
+        let line -= dir
+        call add(lines, line)
+    endfor
 
-  execute 'normal!' lines[0].'GV'.lines[1].'G'
+    execute 'normal!' lines[0].'GV'.lines[1].'G'
 endfunction
 xmap <silent> i# :<C-U>call <SID>inner_comment(1)<CR><Plug>(TOC)
 omap <silent> i# :<C-U>call <SID>inner_comment(0)<CR><Plug>(TOC)
@@ -1029,39 +1028,39 @@ omap <silent> i# :<C-U>call <SID>inner_comment(0)<CR><Plug>(TOC)
 " ?ic / ?iC | Blockwise column object
 " ----------------------------------------------------------------------------
 function! s:inner_blockwise_column(vmode, cmd)
-  if a:vmode == "\<C-V>"
-    let [pvb, pve] = [getpos("'<"), getpos("'>")]
-    normal! `z
-  endif
+    if a:vmode == "\<C-V>"
+        let [pvb, pve] = [getpos("'<"), getpos("'>")]
+        normal! `z
+    endif
 
-  execute "normal! \<C-V>".a:cmd."o\<C-C>"
-  let [line, col] = [line('.'), col('.')]
-  let [cb, ce]    = [col("'<"), col("'>")]
-  let [mn, mx]    = [line, line]
+    execute "normal! \<C-V>".a:cmd."o\<C-C>"
+    let [line, col] = [line('.'), col('.')]
+    let [cb, ce]    = [col("'<"), col("'>")]
+    let [mn, mx]    = [line, line]
 
-  for dir in [1, -1]
-    let l = line + dir
-    while line('.') > 1 && line('.') < line('$')
-      execute "normal! ".l."G".col."|"
-      execute "normal! v".a:cmd."\<C-C>"
-      if cb != col("'<") || ce != col("'>")
-        break
-      endif
-      let [mn, mx] = [min([line('.'), mn]), max([line('.'), mx])]
-      let l += dir
-    endwhile
-  endfor
+    for dir in [1, -1]
+        let l = line + dir
+        while line('.') > 1 && line('.') < line('$')
+            execute "normal! ".l."G".col."|"
+            execute "normal! v".a:cmd."\<C-C>"
+            if cb != col("'<") || ce != col("'>")
+                break
+            endif
+            let [mn, mx] = [min([line('.'), mn]), max([line('.'), mx])]
+            let l += dir
+        endwhile
+    endfor
 
-  execute printf("normal! %dG%d|\<C-V>%s%dG", mn, col, a:cmd, mx)
+    execute printf("normal! %dG%d|\<C-V>%s%dG", mn, col, a:cmd, mx)
 
-  if a:vmode == "\<C-V>"
-    normal! o
-    if pvb[1] < line('.') | execute "normal! ".pvb[1]."G" | endif
-    if pvb[2] < col('.')  | execute "normal! ".pvb[2]."|" | endif
-    normal! o
-    if pve[1] > line('.') | execute "normal! ".pve[1]."G" | endif
-    if pve[2] > col('.')  | execute "normal! ".pve[2]."|" | endif
-  endif
+    if a:vmode == "\<C-V>"
+        normal! o
+        if pvb[1] < line('.') | execute "normal! ".pvb[1]."G" | endif
+        if pvb[2] < col('.')  | execute "normal! ".pvb[2]."|" | endif
+        normal! o
+        if pve[1] > line('.') | execute "normal! ".pve[1]."G" | endif
+        if pve[2] > col('.')  | execute "normal! ".pve[2]."|" | endif
+    endif
 endfunction
 
 xnoremap <silent> ic mz:<C-U>call <SID>inner_blockwise_column(visualmode(), 'iw')<CR>
@@ -1091,51 +1090,51 @@ onoremap <silent> a~ :<C-U>execute "normal va`"<cr>
 " vim-plug extension
 " ----------------------------------------------------------------------------
 function! s:plug_gx()
-  let line = getline('.')
-  let sha  = matchstr(line, '^  \X*\zs\x\{7,9}\ze ')
-  let name = empty(sha) ? matchstr(line, '^[-x+] \zs[^:]\+\ze:')
-                      \ : getline(search('^- .*:$', 'bn'))[2:-2]
-  let uri  = get(get(g:plugs, name, {}), 'uri', '')
-  if uri !~ 'github.com'
-    return
-  endif
-  let repo = matchstr(uri, '[^:/]*/'.name)
-  let url  = empty(sha) ? 'https://github.com/'.repo
-                      \ : printf('https://github.com/%s/commit/%s', repo, sha)
-  call netrw#BrowseX(url, 0)
+    let line = getline('.')
+    let sha  = matchstr(line, '^  \X*\zs\x\{7,9}\ze ')
+    let name = empty(sha) ? matchstr(line, '^[-x+] \zs[^:]\+\ze:')
+                \ : getline(search('^- .*:$', 'bn'))[2:-2]
+    let uri  = get(get(g:plugs, name, {}), 'uri', '')
+    if uri !~ 'github.com'
+        return
+    endif
+    let repo = matchstr(uri, '[^:/]*/'.name)
+    let url  = empty(sha) ? 'https://github.com/'.repo
+                \ : printf('https://github.com/%s/commit/%s', repo, sha)
+    call netrw#BrowseX(url, 0)
 endfunction
 
 function! s:scroll_preview(down)
-  silent! wincmd P
-  if &previewwindow
-    execute 'normal!' a:down ? "\<c-e>" : "\<c-y>"
-    wincmd p
-  endif
+    silent! wincmd P
+    if &previewwindow
+        execute 'normal!' a:down ? "\<c-e>" : "\<c-y>"
+        wincmd p
+    endif
 endfunction
 
 function! s:plug_doc()
-  let name = matchstr(getline('.'), '^- \zs\S\+\ze:')
-  if has_key(g:plugs, name)
-    for doc in split(globpath(g:plugs[name].dir, 'doc/*.txt'), '\n')
-      execute 'tabe' doc
-    endfor
-  endif
+    let name = matchstr(getline('.'), '^- \zs\S\+\ze:')
+    if has_key(g:plugs, name)
+        for doc in split(globpath(g:plugs[name].dir, 'doc/*.txt'), '\n')
+            execute 'tabe' doc
+        endfor
+    endif
 endfunction
 
 function! s:setup_extra_keys()
-  " PlugDiff
-  nnoremap <silent> <buffer> J :call <sid>scroll_preview(1)<cr>
-  nnoremap <silent> <buffer> K :call <sid>scroll_preview(0)<cr>
-  nnoremap <silent> <buffer> <c-n> :call search('^  \X*\zs\x')<cr>
-  nnoremap <silent> <buffer> <c-p> :call search('^  \X*\zs\x', 'b')<cr>
-  nmap <silent> <buffer> <c-j> <c-n>o
-  nmap <silent> <buffer> <c-k> <c-p>o
+    " PlugDiff
+    nnoremap <silent> <buffer> J :call <sid>scroll_preview(1)<cr>
+    nnoremap <silent> <buffer> K :call <sid>scroll_preview(0)<cr>
+    nnoremap <silent> <buffer> <c-n> :call search('^  \X*\zs\x')<cr>
+    nnoremap <silent> <buffer> <c-p> :call search('^  \X*\zs\x', 'b')<cr>
+    nmap <silent> <buffer> <c-j> <c-n>o
+    nmap <silent> <buffer> <c-k> <c-p>o
 
-  " gx
-  nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
+    " gx
+    nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
 
-  " helpdoc
-  nnoremap <buffer> <silent> H  :call <sid>plug_doc()<cr>
+    " helpdoc
+    nnoremap <buffer> <silent> H  :call <sid>plug_doc()<cr>
 endfunction
 
 autocmd vimrc FileType vim-plug call s:setup_extra_keys()
@@ -1185,9 +1184,9 @@ runtime macros/matchit.vim
 " ack.vim
 " ----------------------------------------------------------------------------
 if executable('ag')
-  let &grepprg = 'ag --nogroup --nocolor --column'
+    let &grepprg = 'ag --nogroup --nocolor --column'
 else
-  let &grepprg = 'grep -rn $* *'
+    let &grepprg = 'grep -rn $* *'
 endif
 command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 
@@ -1195,39 +1194,39 @@ command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 " vim-after-object
 " ----------------------------------------------------------------------------
 silent! if has_key(g:plugs, 'vim-after-object')
-  autocmd VimEnter * silent! call after_object#enable('=', ':', '#', ' ', '|')
+autocmd VimEnter * silent! call after_object#enable('=', ':', '#', ' ', '|')
 endif
 
 " ----------------------------------------------------------------------------
 " <Enter> | vim-easy-align
 " ----------------------------------------------------------------------------
 let g:easy_align_delimiters = {
-\ '>': { 'pattern': '>>\|=>\|>' },
-\ '\': { 'pattern': '\\' },
-\ '/': { 'pattern': '//\+\|/\*\|\*/', 'delimiter_align': 'l', 'ignore_groups': ['!Comment'] },
-\ ']': {
-\     'pattern':       '\]\zs',
-\     'left_margin':   0,
-\     'right_margin':  1,
-\     'stick_to_left': 0
-\   },
-\ ')': {
-\     'pattern':       ')\zs',
-\     'left_margin':   0,
-\     'right_margin':  1,
-\     'stick_to_left': 0
-\   },
-\ 'f': {
-\     'pattern': ' \(\S\+(\)\@=',
-\     'left_margin': 0,
-\     'right_margin': 0
-\   },
-\ 'd': {
-\     'pattern': ' \ze\S\+\s*[;=]',
-\     'left_margin': 0,
-\     'right_margin': 0
-\   }
-\ }
+            \ '>': { 'pattern': '>>\|=>\|>' },
+            \ '\': { 'pattern': '\\' },
+            \ '/': { 'pattern': '//\+\|/\*\|\*/', 'delimiter_align': 'l', 'ignore_groups': ['!Comment'] },
+            \ ']': {
+            \     'pattern':       '\]\zs',
+            \     'left_margin':   0,
+            \     'right_margin':  1,
+            \     'stick_to_left': 0
+            \   },
+            \ ')': {
+            \     'pattern':       ')\zs',
+            \     'left_margin':   0,
+            \     'right_margin':  1,
+            \     'stick_to_left': 0
+            \   },
+            \ 'f': {
+            \     'pattern': ' \(\S\+(\)\@=',
+            \     'left_margin': 0,
+            \     'right_margin': 0
+            \   },
+            \ 'd': {
+            \     'pattern': ' \ze\S\+\s*[;=]',
+            \     'left_margin': 0,
+            \     'right_margin': 0
+            \   }
+            \ }
 
 " Start interactive EasyAlign in visual mode
 xmap ga <Plug>(EasyAlign)
@@ -1257,7 +1256,7 @@ let g:signify_skip_filetype = { 'journal': 1 }
 " vim-slash
 " ----------------------------------------------------------------------------
 if has('timers')
-  noremap <expr> <plug>(slash-after) slash#blink(2, 50)
+    noremap <expr> <plug>(slash-after) slash#blink(2, 50)
 endif
 
 " ----------------------------------------------------------------------------
@@ -1283,42 +1282,42 @@ nnoremap gsj :SplitjoinJoin<cr>
 " vimawesome.com
 " ----------------------------------------------------------------------------
 function! VimAwesomeComplete() abort
-  let prefix = matchstr(strpart(getline('.'), 0, col('.') - 1), '[.a-zA-Z0-9_/-]*$')
-  echohl WarningMsg
-  echo 'Downloading plugin list from VimAwesome'
-  echohl None
-ruby << EOF
-  require 'json'
-  require 'open-uri'
+    let prefix = matchstr(strpart(getline('.'), 0, col('.') - 1), '[.a-zA-Z0-9_/-]*$')
+    echohl WarningMsg
+    echo 'Downloading plugin list from VimAwesome'
+    echohl None
+    ruby << EOF
+    require 'json'
+    require 'open-uri'
 
-  query = VIM::evaluate('prefix').gsub('/', '%20')
-  items = 1.upto(max_pages = 3).map do |page|
+    query = VIM::evaluate('prefix').gsub('/', '%20')
+    items = 1.upto(max_pages = 3).map do |page|
     Thread.new do
-      url  = "http://vimawesome.com/api/plugins?page=#{page}&query=#{query}"
-      data = open(url).read
-      json = JSON.parse(data, symbolize_names: true)
-      json[:plugins].map do |info|
-        pair = info.values_at :github_owner, :github_repo_name
-        next if pair.any? { |e| e.nil? || e.empty? }
-        {word: pair.join('/'),
-         menu: info[:category].to_s,
-         info: info.values_at(:short_desc, :author).compact.join($/)}
-      end.compact
+    url  = "http://vimawesome.com/api/plugins?page=#{page}&query=#{query}"
+    data = open(url).read
+    json = JSON.parse(data, symbolize_names: true)
+    json[:plugins].map do |info|
+    pair = info.values_at :github_owner, :github_repo_name
+    next if pair.any? { |e| e.nil? || e.empty? }
+    {word: pair.join('/'),
+    menu: info[:category].to_s,
+    info: info.values_at(:short_desc, :author).compact.join($/)}
+end.compact
     end
-  end.each(&:join).map(&:value).inject(:+)
-  VIM::command("let cands = #{JSON.dump items}")
+end.each(&:join).map(&:value).inject(:+)
+VIM::command("let cands = #{JSON.dump items}")
 EOF
-  if !empty(cands)
+if !empty(cands)
     inoremap <buffer> <c-v> <c-n>
     augroup _VimAwesomeComplete
-      autocmd!
-      autocmd CursorMovedI,InsertLeave * iunmap <buffer> <c-v>
-            \| autocmd! _VimAwesomeComplete
+        autocmd!
+        autocmd CursorMovedI,InsertLeave * iunmap <buffer> <c-v>
+                    \| autocmd! _VimAwesomeComplete
     augroup END
 
     call complete(col('.') - strchars(prefix), cands)
-  endif
-  return ''
+endif
+return ''
 endfunction
 
 autocmd vimrc FileType vim inoremap <buffer> <c-x><c-v> <c-r>=VimAwesomeComplete()<cr>
@@ -1343,22 +1342,22 @@ nnoremap ; :
 " ============================================================================
 " tagbar 
 if v:version >= 703
-  nnoremap ` :TagbarToggle<cr>
-  let g:tagbar_sort = 0
-  let g:tagbar_width = 30 
-  let g:tagbar_autoclose = 1
+    nnoremap ` :TagbarToggle<cr>
+    let g:tagbar_sort = 0
+    let g:tagbar_width = 30 
+    let g:tagbar_autoclose = 1
 endif
 " ============================================================================
 " FZF {{{
 " ============================================================================
 
 if has('nvim')
-  let $FZF_DEFAULT_OPTS .= ' --inline-info'
-  " let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
+    let $FZF_DEFAULT_OPTS .= ' --inline-info'
+    " let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
 endif
 
 command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+            \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 " nnoremap <silent> <Leader><Leader> :Files<CR>
 nnoremap <silent> <expr> <Leader><leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
@@ -1381,21 +1380,21 @@ xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
 
 function! s:plugs_sink(line)
-  let dir = g:plugs[a:line].dir
-  for pat in ['doc/*.txt', 'README.md']
-    let match = get(split(globpath(dir, pat), "\n"), 0, '')
-    if len(match)
-      execute 'tabedit' match
-      return
-    endif
-  endfor
-  tabnew
-  execute 'Explore' dir
+    let dir = g:plugs[a:line].dir
+    for pat in ['doc/*.txt', 'README.md']
+        let match = get(split(globpath(dir, pat), "\n"), 0, '')
+        if len(match)
+            execute 'tabedit' match
+            return
+        endif
+    endfor
+    tabnew
+    execute 'Explore' dir
 endfunction
 
 command! PlugHelp call fzf#run(fzf#wrap({
-  \ 'source':  sort(keys(g:plugs)),
-  \ 'sink':    function('s:plugs_sink')}))
+            \ 'source':  sort(keys(g:plugs)),
+            \ 'sink':    function('s:plugs_sink')}))
 
 " }}}
 " ============================================================================
@@ -1403,51 +1402,51 @@ command! PlugHelp call fzf#run(fzf#wrap({
 " ============================================================================
 
 augroup vimrc
-  au BufWritePost vimrc,.vimrc nested if expand('%') !~ 'fugitive' | source % | endif
+    au BufWritePost vimrc,.vimrc nested if expand('%') !~ 'fugitive' | source % | endif
 
-  " IndentLines
-  au FileType slim IndentLinesEnable
+    " IndentLines
+    au FileType slim IndentLinesEnable
 
-  " File types
-  au BufNewFile,BufRead *.icc               set filetype=cpp
-  au BufNewFile,BufRead *.pde               set filetype=java
-  au BufNewFile,BufRead *.coffee-processing set filetype=coffee
-  au BufNewFile,BufRead Dockerfile*         set filetype=dockerfile
+    " File types
+    au BufNewFile,BufRead *.icc               set filetype=cpp
+    au BufNewFile,BufRead *.pde               set filetype=java
+    au BufNewFile,BufRead *.coffee-processing set filetype=coffee
+    au BufNewFile,BufRead Dockerfile*         set filetype=dockerfile
 
-  " Included syntax
-  au FileType,ColorScheme * call <SID>file_type_handler()
+    " Included syntax
+    au FileType,ColorScheme * call <SID>file_type_handler()
 
-  " Fugitive
-  au FileType gitcommit setlocal completefunc=emoji#complete
-  au FileType gitcommit nnoremap <buffer> <silent> cd :<C-U>Gcommit --amend --date="$(date)"<CR>
+    " Fugitive
+    au FileType gitcommit setlocal completefunc=emoji#complete
+    au FileType gitcommit nnoremap <buffer> <silent> cd :<C-U>Gcommit --amend --date="$(date)"<CR>
 
-  " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
-  au BufNewFile,BufRead,InsertLeave * silent! match ExtraWhitespace /\s\+$/
-  au InsertEnter * silent! match ExtraWhitespace /\s\+\%#\@<!$/
+    " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
+    au BufNewFile,BufRead,InsertLeave * silent! match ExtraWhitespace /\s\+$/
+    au InsertEnter * silent! match ExtraWhitespace /\s\+\%#\@<!$/
 
 
-  " Close preview window
-  if exists('##CompleteDone')
-    au CompleteDone * pclose
-  else
-    au InsertLeave * if !pumvisible() && (!exists('*getcmdwintype') || empty(getcmdwintype())) | pclose | endif
-  endif
+    " Close preview window
+    if exists('##CompleteDone')
+        au CompleteDone * pclose
+    else
+        au InsertLeave * if !pumvisible() && (!exists('*getcmdwintype') || empty(getcmdwintype())) | pclose | endif
+    endif
 
-  " Automatic rename of tmux window
-  if exists('$TMUX') && !exists('$NORENAME')
-    au BufEnter * if empty(&buftype) | call system('tmux rename-window '.expand('%:t:S')) | endif
-    au VimLeave * call system('tmux set-window automatic-rename on')
-  endif
+    " Automatic rename of tmux window
+    if exists('$TMUX') && !exists('$NORENAME')
+        au BufEnter * if empty(&buftype) | call system('tmux rename-window '.expand('%:t:S')) | endif
+        au VimLeave * call system('tmux set-window automatic-rename on')
+    endif
 augroup END
 
 " ----------------------------------------------------------------------------
 " Help in new tabs
 " ----------------------------------------------------------------------------
 function! s:helptab()
-  if &buftype == 'help'
-    wincmd T
-    nnoremap <buffer> q :q<cr>
-  endif
+    if &buftype == 'help'
+        wincmd T
+        nnoremap <buffer> q :q<cr>
+    endif
 endfunction
 autocmd vimrc BufEnter *.txt call s:helptab()
 
@@ -1457,7 +1456,7 @@ autocmd vimrc BufEnter *.txt call s:helptab()
 " LOCAL VIMRC {{{
 let s:local_vimrc = fnamemodify(resolve(expand('<sfile>')), ':p:h').'/vimrc-extra'
 if filereadable(s:local_vimrc)
-  execute 'source' s:local_vimrc
+    execute 'source' s:local_vimrc
 endif
 
 " }}}
@@ -1465,26 +1464,26 @@ endif
 " ----------------------------------------------------------------------------
 " 防止tmux下vim的背景色显示异常
 if &term =~ '256color'
-  " disable Background Color Erase (BCE) so that color schemes
-  " render properly when inside 256-color tmux and GNU screen.
-  " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
-  set t_ut=
+    " disable Background Color Erase (BCE) so that color schemes
+    " render properly when inside 256-color tmux and GNU screen.
+    " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+    set t_ut=
 endif
 " solarized {{{
-    let g:solarized_termtrans=1
-    let g:solarized_contrast="normal"
-    let g:solarized_visibility="normal"
-    " let g:solarized_termcolors=256
+let g:solarized_termtrans=1
+let g:solarized_contrast="normal"
+let g:solarized_visibility="normal"
+" let g:solarized_termcolors=256
 " }}}
 function! s:rotate_colors()
-  if !exists('s:colors')
-    let s:colors = s:colors()
-  endif
-  let name = remove(s:colors, 0)
-  call add(s:colors, name)
-  execute 'colorscheme' name
-  redraw
-  echo name
+    if !exists('s:colors')
+        let s:colors = s:colors()
+    endif
+    let name = remove(s:colors, 0)
+    call add(s:colors, name)
+    execute 'colorscheme' name
+    redraw
+    echo name
 endfunction
 nnoremap <silent> <F7> :call <SID>rotate_colors()<cr>
 
@@ -1508,7 +1507,7 @@ highlight SpellLocal term=underline cterm=underline
 " ============================================================================
 " 状态栏和buffers
 if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
+    let g:airline_symbols = {}
 endif
 "let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme="aurora" 
@@ -1519,9 +1518,9 @@ let g:airline#extensions#whitespace#symbol = '!'
 " ============================================================================
 " 搜索ag.vim
 if executable('ag')
-  let &grepprg = 'ag --nogroup --nocolor --column'
+    let &grepprg = 'ag --nogroup --nocolor --column'
 else
-  let &grepprg = 'grep -rn $* *'
+    let &grepprg = 'grep -rn $* *'
 endif
 command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 " ============================================================================
