@@ -6,112 +6,8 @@
 unlet! skip_defaults_vim
 silent! source $VIMRUNTIME/defaults.vim
 
-let s:darwin = has('mac')
-
-" }}}
 " ============================================================================
-" VIM-PLUG BLOCK {{{
-" ============================================================================
-
-silent! if plug#begin('~/.vim/plugged')
-
-if s:darwin
-  let g:plug_url_format = 'git@github.com:%s.git'
-else
-  let $GIT_SSL_NO_VERIFY = 'true'
-endif
-" airline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-" My plugins
-Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
-Plug 'junegunn/gv.vim'
-Plug 'junegunn/vim-pseudocl'
-Plug 'junegunn/vim-fnr'
-Plug 'junegunn/fzf',        { 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'junegunn/rainbow_parentheses.vim'
-if v:version >= 703
-  Plug 'junegunn/vim-after-object'
-endif
-if s:darwin
-  Plug 'junegunn/vim-xmark'
-endif
-unlet! g:plug_url_format
-
-" Colors
-Plug 'altercation/vim-colors-solarized'
-
-" Edit
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
-Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
-Plug 'vim-scripts/ReplaceWithRegister'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'rhysd/vim-grammarous'
-Plug 'beloglazov/vim-online-thesaurus'
-
-
-" Plug 'SirVer/ultisnips', { 'on': '#InsertEnter' }
-" Plug 'honza/vim-snippets'
-
-" Browsing
-Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
-autocmd! User indentLine doautocmd indentLine Syntax
-
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-augroup nerd_loader
-  autocmd!
-  autocmd VimEnter * silent! autocmd! FileExplorer
-  autocmd BufEnter,BufNew *
-        \  if isdirectory(expand('<amatch>'))
-        \|   call plug#load('nerdtree')
-        \|   execute 'autocmd! nerd_loader'
-        \| endif
-augroup END
-
-if v:version >= 703
-  Plug 'majutsushi/tagbar'
-endif
-Plug 'justinmk/vim-gtfo'
-
-" Git
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
-if v:version >= 703
-  Plug 'mhinz/vim-signify'
-endif
-
-" Lang
-Plug 'tpope/vim-bundler'
-Plug 'groenewege/vim-less'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'kchmck/vim-coffee-script'
-Plug 'slim-template/vim-slim'
-Plug 'Glench/Vim-Jinja2-Syntax'
-Plug 'tpope/vim-rails',      { 'for': []      }
-Plug 'derekwyatt/vim-scala'
-Plug 'honza/dockerfile.vim'
-Plug 'solarnz/thrift.vim'
-Plug 'dag/vim-fish'
-Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
-Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'lyuts/vim-rtags', { 'for': ['c', 'cpp'] }
-
-" Lint
-Plug 'metakirby5/codi.vim'
-Plug 'w0rp/ale', { 'on': 'ALEEnable', 'for': ['ruby', 'sh'] }
-
-call plug#end()
-endif
-
-" }}}
-" ============================================================================
-" BASIC SETTINGS {{{
+"  SETTINGS {{{
 " ============================================================================
 
 let mapleader      = ' '
@@ -228,15 +124,11 @@ if exists('&fixeol')
   set nofixeol
 endif
 
-" }}}
 " ============================================================================
 " MAPPINGS {{{
 " ============================================================================
-
-" ----------------------------------------------------------------------------
-" Basic mappings
-" ----------------------------------------------------------------------------
-
+"
+nnoremap ggg ggVG 
 " Disable CTRL-A on tmux or on screen
 if $TERM =~ 'screen'
   nnoremap <C-a> <nop>
@@ -305,6 +197,115 @@ nnoremap <silent> <leader>z :call <sid>zoom()<cr>
 " Last inserted text
 nnoremap g. :normal! `[v`]<cr><left>
 
+let s:darwin = has('mac')
+
+" }}}
+" ============================================================================
+" VIM-PLUG BLOCK {{{
+" ============================================================================
+
+silent! if plug#begin('~/.vim/plugged')
+
+if s:darwin
+  let g:plug_url_format = 'git@github.com:%s.git'
+else
+  let $GIT_SSL_NO_VERIFY = 'true'
+endif
+Plug 'terryma/vim-expand-region' "多选中
+" airline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+" My plugins
+Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
+Plug 'junegunn/gv.vim'
+Plug 'junegunn/vim-pseudocl'
+Plug 'junegunn/vim-fnr'
+Plug 'junegunn/fzf',        { 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/rainbow_parentheses.vim'
+if v:version >= 703
+  Plug 'junegunn/vim-after-object'
+endif
+if s:darwin
+  Plug 'junegunn/vim-xmark'
+endif
+unlet! g:plug_url_format
+
+" Colors
+Plug 'altercation/vim-colors-solarized'
+
+" Edit
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
+Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
+Plug 'vim-scripts/ReplaceWithRegister'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'rhysd/vim-grammarous'
+Plug 'beloglazov/vim-online-thesaurus'
+
+
+" Plug 'SirVer/ultisnips', { 'on': '#InsertEnter' }
+" Plug 'honza/vim-snippets'
+
+" Browsing
+Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
+autocmd! User indentLine doautocmd indentLine Syntax
+
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+augroup nerd_loader
+  autocmd!
+  autocmd VimEnter * silent! autocmd! FileExplorer
+  autocmd BufEnter,BufNew *
+        \  if isdirectory(expand('<amatch>'))
+        \|   call plug#load('nerdtree')
+        \|   execute 'autocmd! nerd_loader'
+        \| endif
+augroup END
+
+if v:version >= 703
+  Plug 'majutsushi/tagbar'
+endif
+Plug 'justinmk/vim-gtfo'
+
+" Git
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+if v:version >= 703
+  Plug 'mhinz/vim-signify'
+endif
+
+" Lang
+Plug 'tpope/vim-bundler'
+Plug 'groenewege/vim-less'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'kchmck/vim-coffee-script'
+Plug 'slim-template/vim-slim'
+Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'tpope/vim-rails',      { 'for': []      }
+Plug 'derekwyatt/vim-scala'
+Plug 'honza/dockerfile.vim'
+Plug 'solarnz/thrift.vim'
+Plug 'dag/vim-fish'
+Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'lyuts/vim-rtags', { 'for': ['c', 'cpp'] }
+
+" Lint
+Plug 'metakirby5/codi.vim'
+Plug 'w0rp/ale', { 'on': 'ALEEnable', 'for': ['ruby', 'sh'] }
+
+call plug#end()
+endif
+
+" ----------------------------------------------------------------------------
+" vim-expand-region
+" ----------------------------------------------------------------------------
+vmap v <Plug>(expand_region_expand)
+vmap V <Plug>(expand_region_shrink)
 " ----------------------------------------------------------------------------
 " nvim
 " ----------------------------------------------------------------------------
@@ -982,8 +983,8 @@ endfor
 " ----------------------------------------------------------------------------
 " ?ie | entire object
 " ----------------------------------------------------------------------------
-xnoremap <silent> ie gg0oG$
-onoremap <silent> ie :<C-U>execute "normal! m`"<Bar>keepjumps normal! eggVG<CR>
+xnoremap <silent> ie gg0oGe$
+onoremap <silent> ie :<C-U>execute "normal! m`"<Bar>keepjumps normal! eeggVG<CR>
 
 " ----------------------------------------------------------------------------
 " ?il | inner line
