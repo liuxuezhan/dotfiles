@@ -1360,10 +1360,10 @@ command! -bang -nargs=? -complete=dir Files
             \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 " nnoremap <silent> <Leader><Leader> :Files<CR>
-nnoremap <silent> <expr> \ (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
+nnoremap <silent> <expr> <leader>j (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
+nnoremap \ :Ag <C-R><C-W>
 nnoremap <silent> <Leader>C        :Colors<CR>
 nnoremap <silent> <enter>  :Buffers<CR>
-nnoremap <leader>j   :Ag <C-R><C-W>
 nnoremap <silent> <Leader>AG       :Ag <C-R><C-A><CR>
 xnoremap <silent> <Leader>ag       y:Ag <C-R>"<CR>
 nnoremap <silent> <Leader>`        :Marks<CR>
