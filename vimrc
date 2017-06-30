@@ -1560,4 +1560,5 @@ nnoremap z zr
 "buffer
 " Remember info about open buffers on close
 set viminfo^=%
-
+"恢复前进键
+nunmap <c-i>
