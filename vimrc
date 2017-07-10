@@ -332,9 +332,9 @@ nnoremap [t :tabp<cr>
 " ----------------------------------------------------------------------------
 " <tab> / <s-tab> | Circular windows navigation
 " ----------------------------------------------------------------------------
-nnoremap <tab>   <c-w>w
-nnoremap <S-tab> <c-w>W
-
+"nnoremap <tab>   <c-w>w
+"恢复前进键 
+"nunmap <c-i>
 " ----------------------------------------------------------------------------
 " <tab> / <s-tab> / <c-v><tab> | super-duper-tab
 " ----------------------------------------------------------------------------
@@ -1560,5 +1560,3 @@ nnoremap z zr
 "buffer
 " Remember info about open buffers on close
 set viminfo^=%
-"恢复前进键
-nunmap <c-i>
