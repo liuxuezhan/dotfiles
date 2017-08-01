@@ -1545,16 +1545,17 @@ set expandtab
 set shiftround
 " ============================================================================
 " diff配置
-map <Up> <Nop>
-map <Down> <Nop>
-nnoremap <Up> [c
-nnoremap <Down> ]c
-map <left> <Nop>
-map <right> <Nop>
-nnoremap <left> do
-nnoremap <right> dp
-set nofoldenable
-nnoremap z zr
+if &diff
+    map <Up> <Nop>
+    map <Down> <Nop>
+    nnoremap <Up> [c
+    nnoremap <Down> ]c
+    map <left> <Nop>
+    map <right> <Nop>
+    nnoremap <left> do
+    nnoremap <right> dp
+    nnoremap z zr
+endif
 
 " ============================================================================
 "buffer
