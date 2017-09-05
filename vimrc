@@ -1326,7 +1326,7 @@ autocmd vimrc FileType vim inoremap <buffer> <c-x><c-v> <c-r>=VimAwesomeComplete
 
 " ============================================================================
 " NERD Tree
-nnoremap <leader><leader> :NERDTreeToggle<cr>
+nnoremap <leader>j :NERDTreeToggle<cr>
 let NERDTreeHighlightCursorline=1
 let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
@@ -1359,7 +1359,7 @@ endif
 command! -bang -nargs=? -complete=dir Files
             \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
-nnoremap <silent> <expr> <leader>j (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
+nnoremap <silent> <expr> <leader><leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 nnoremap \ :Ag <C-R><C-W>
 nnoremap <silent> <Leader>C        :Colors<CR>
 nnoremap <silent> <Enter><Enter>  :Buffers<CR>
