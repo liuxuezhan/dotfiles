@@ -1,4 +1,4 @@
-" ============================================================================
+" ===========================================================================
 " .vimrc of Junegunn Choi {{{
 " ============================================================================
 
@@ -80,8 +80,6 @@ endif
 set modelines=2
 set synmaxcol=1000
 
-" ctags
-set tags=./tags;/
 
 " 取消备份。 视情况自己改
 set nobackup
@@ -222,6 +220,7 @@ Plug 'junegunn/vim-pseudocl'
 Plug 'junegunn/vim-fnr'
 Plug 'junegunn/fzf',        { 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'junegunn/rainbow_parentheses.vim'
 if v:version >= 703
     Plug 'junegunn/vim-after-object'
@@ -1362,7 +1361,6 @@ command! -bang -nargs=? -complete=dir Files
 nnoremap <silent> <expr> <leader><leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 nnoremap \ :Ag <C-R><C-W>
 nnoremap <silent> <Leader>C        :Colors<CR>
-nnoremap <silent> <Enter><Enter>  :Buffers<CR>
 nnoremap <silent> <Leader>AG       :Ag <C-R><C-A><CR>
 xnoremap <silent> <Leader>ag       y:Ag <C-R>"<CR>
 nnoremap <silent> <Leader>`        :Marks<CR>
@@ -1561,3 +1559,27 @@ endif
 "buffer
 " Remember info about open buffers on close
 set viminfo^=%
+let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
+
+nnoremap <silent> <Enter><Enter>  :Buffers<CR>
+set tags=./.tags;,.tags
+" ============================================================================
+" gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
+let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+"
+" " 所生成的数据文件的名称
+let g:gutentags_ctags_tagfile = '.tags'
+"
+" " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+ let s:vim_tags = expand('~/.cache/tags')
+ let g:gutentags_cache_dir = s:vim_tags
+"
+" " 配置 ctags 的参数
+ let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+ let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+ let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+"
+" " 检测 ~/.cache/tags 不存在就新建
+ if !isdirectory(s:vim_tags)
+     silent! call mkdir(s:vim_tags, 'p')
+     endif
